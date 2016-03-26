@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Spring,源码," />
 
 
 
@@ -57,18 +57,33 @@
 
 
 
-<meta name="description" content="这是测试图片的。">
+<meta name="description" content="本文主要介绍如何导入Spring源码及遇到的小问题。
+
+絮叨最近准备开始逐步深入学习Spring源码，遂着手学习借阅已久的《Spring源码深度解析》这本书，但是到了第二章导入源码部分的时候碰到了小问题，本想借助度娘的力量轻松解决，但查阅资料都没能很好的解决我的问题（可能本人水平太低-_-|||，有些地方大神们以为很简单不值一提，一笔带过），然后结合大神博客里的方法，加上自己摸索算是解决了此问题吧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes">
-<meta property="og:url" content="http://yoursite.com/2016/02/25/Notes/index.html">
+<meta property="og:title" content="Spring 源码深度解析-Spring源码导入">
+<meta property="og:url" content="http://yoursite.com/2016/03/01/Spring 源码深度解析-Spring源码导入/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
-<meta property="og:description" content="这是测试图片的。">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg">
-<meta property="og:updated_time" content="2016-02-28T08:31:28.331Z">
+<meta property="og:description" content="本文主要介绍如何导入Spring源码及遇到的小问题。
+
+絮叨最近准备开始逐步深入学习Spring源码，遂着手学习借阅已久的《Spring源码深度解析》这本书，但是到了第二章导入源码部分的时候碰到了小问题，本想借助度娘的力量轻松解决，但查阅资料都没能很好的解决我的问题（可能本人水平太低-_-|||，有些地方大神们以为很简单不值一提，一笔带过），然后结合大神博客里的方法，加上自己摸索算是解决了此问题吧">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_1.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_2.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_3.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_4.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_5.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_6.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_7.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_8.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_9.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_10.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_11.PNG">
+<meta property="og:updated_time" content="2016-03-26T14:43:26.484Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Notes">
-<meta name="twitter:description" content="这是测试图片的。">
+<meta name="twitter:title" content="Spring 源码深度解析-Spring源码导入">
+<meta name="twitter:description" content="本文主要介绍如何导入Spring源码及遇到的小问题。
+
+絮叨最近准备开始逐步深入学习Spring源码，遂着手学习借阅已久的《Spring源码深度解析》这本书，但是到了第二章导入源码部分的时候碰到了小问题，本想借助度娘的力量轻松解决，但查阅资料都没能很好的解决我的问题（可能本人水平太低-_-|||，有些地方大神们以为很简单不值一提，一笔带过），然后结合大神博客里的方法，加上自己摸索算是解决了此问题吧">
 
 
 
@@ -86,7 +101,7 @@
   };
 </script>
 
-  <title> Notes | CallMeSurprise </title>
+  <title> Spring 源码深度解析-Spring源码导入 | CallMeSurprise </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -226,7 +241,7 @@
             
             
               
-                Notes
+                Spring 源码深度解析-Spring源码导入
               
             
           </h1>
@@ -238,11 +253,30 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-25T21:21:59+08:00" content="2016-02-25">
-              2016-02-25
+            <time itemprop="dateCreated" datetime="2016-03-01T21:05:20+08:00" content="2016-03-01">
+              2016-03-01
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -253,7 +287,7 @@
 
           
           
-             <span id="/2016/02/25/Notes/" class="leancloud_visitors" data-flag-title="Notes">
+             <span id="/2016/03/01/Spring 源码深度解析-Spring源码导入/" class="leancloud_visitors" data-flag-title="Spring 源码深度解析-Spring源码导入">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -271,55 +305,67 @@
 
       
       
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg" rel="gallery_cim990tuq0000h4uoedkuebmg"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-            
-              <a class="post-gallery-img fancybox"
-                 href="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg" rel="gallery_cim990tuq0000h4uoedkuebmg"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><h3 id="主题-Next"><a href="#主题-Next" class="headerlink" title="主题-Next"></a>主题-Next</h3><pre><code>http://theme-next.iissnan.com/
-</code></pre><h3 id="TODOing"><a href="#TODOing" class="headerlink" title="TODOing"></a>TODOing</h3><h4 id="Feed-不是很想做这部分"><a href="#Feed-不是很想做这部分" class="headerlink" title="Feed 不是很想做这部分"></a>Feed 不是很想做这部分</h4><h4 id="多说的评论部分，不想做"><a href="#多说的评论部分，不想做" class="headerlink" title="多说的评论部分，不想做"></a>多说的评论部分，不想做</h4><h4 id="显示文章的阅读量"><a href="#显示文章的阅读量" class="headerlink" title="显示文章的阅读量"></a>显示文章的阅读量</h4><p>主页和文章展开的时候在标题下方显示文章阅读人数。<br><a href="http://www.jeyzhang.com/hexo-next-add-post-views.html" target="_blank" rel="external">http://www.jeyzhang.com/hexo-next-add-post-views.html</a><br>参照此处链接，可以实现。不过目前（2016-02-28）的hexo-next主题已经支持，只需要根据上述教程注册账号，填写好app-*信息即可。</p>
-<blockquote>
-<p>如果刷新后，未达到效果，可等待几分钟再刷新即可。</p>
+        <blockquote>
+<p>本文主要介绍如何导入Spring源码及遇到的小问题。</p>
 </blockquote>
-<h3 id="测试代码显示效果"><a href="#测试代码显示效果" class="headerlink" title="测试代码显示效果"></a>测试代码显示效果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">    * 输出一行字符串“Hello World!”</span><br><span class="line">    * <span class="doctag">@param</span> args</span><br><span class="line">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	System.out.println(<span class="string">"Hello World!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="絮叨"><a href="#絮叨" class="headerlink" title="絮叨"></a>絮叨</h2><p>最近准备开始逐步深入学习Spring源码，遂着手学习借阅已久的《Spring源码深度解析》这本书，但是到了第二章导入源码部分的时候碰到了小问题，本想借助度娘的力量轻松解决，但查阅资料都没能很好的解决我的问题（可能本人水平太低-_-|||，有些地方大神们以为很简单不值一提，一笔带过），然后结合大神博客里的方法，加上自己摸索算是解决了此问题吧。<br>特在此处mark一下，记录此问题方便以后查阅，同时能对同样问题的小伙伴有所启发也是极好的。</p>
+<h2 id="导入项目"><a href="#导入项目" class="headerlink" title="导入项目"></a>导入项目</h2><p>按照书上的解释，同时编译整个Spring项目耗时耗资源，不建议采用，因此选择按照需求编译需要阅读源码的模块。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>在安装JDK1.8之后，安装gradle（据说gradle比maven更有优势，心向往之）。Java安装配置不再赘述，gradle的配置也类似于maven，下载-解压-配置路径。具体此处不再描述。</p>
+<h3 id="下载Spring源码"><a href="#下载Spring源码" class="headerlink" title="下载Spring源码"></a>下载Spring源码</h3><p>之后前往github下载Spring源码（或者通过git clone方式下载代码，当然前提是电脑里此时已经安装了github客户端或者类似的工具），可以选择下载mater分支，或者点击Tags选择release版本。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_1.PNG" alt="github源码"></p>
+<blockquote>
+<p>注：书上提供的git地址是springsource而不是此处的spring-project。应该是这里的为准。反正我是从这里下载的+_+。</p>
+<h3 id="编译及导入"><a href="#编译及导入" class="headerlink" title="编译及导入"></a>编译及导入</h3><p>然后在本地解压项目压缩包，选择需要阅读的模块目录，编译即可。<br>按照spring架构，spring-core、Beans等属于基础模块，书本推荐由浅入深了解，此处选择spring-beans，但beans模块依赖core，并且两者的问题均类似，缺少jar包，所以此处以beans举例说明问题。</p>
+</blockquote>
+<p>在spring-core目录中点击上方的文件-打开命令提示符（或者win+R，然后输入<code>cmd</code>，回车，然后一步步<code>cd</code>切换至该目录）。<br>ps：win10及之前的win8好像都支持这样操作。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_2.PNG" alt="win10快捷cmd"><br>在命令窗口中输入<code>gradle cleanidea eclipse</code>即可编译该模块并导入到eclipse中（<code>import-General-Existing project into  Workspace</code>）。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_3.PNG" alt="这里写图片描述"></p>
+<p>此时就出现本文的重点了：eclipse中项目上出现感叹号，然后<code>项目右击-Build path-Config build path</code>，在出现的第三个Libraries的tab中，发现提示错误，并且按照网上的很多方法没能很好的解决我的问题。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_4.PNG" alt="检查本地project"></p>
+<p>然后在<code>Windows-show view-problems</code>发现提示以下错误。</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><code>Project &#39;spring-core&#39; is missing required library: &#39;...spring-framework-master\spring-core\build\libs\spring-cglib-repack-3.2.0.jar&#39;
+Project &#39;spring-core&#39; is missing required library: &#39;...spring-framework-master\spring-core\build\libs\spring-objenesis-repack-2.2.jar&#39;
+The project cannot be built until build path errors are resolved</code></p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="原因及下载jar包"><a href="#原因及下载jar包" class="headerlink" title="原因及下载jar包"></a>原因及下载jar包</h3><p>关于问题及出现的原因此文也有描述，请参考。<br><code>通过阅读源码发现为了避免第三方class的冲突，spring把最新的cglib和objenesis给repack了</code><br>参考文章：<a href="http://blog.csdn.net/sekiu/article/details/50624180" target="_blank" rel="external">关于创建spring源码环境时遇到的缺少spring-cglib-repack-3.2.0.jar和spring-objenesis-repack-2.2.jar两个包的问题</a></p>
+<p>及所需的jar包（非常感谢，不用非得消耗可恶的硬币）。<br><a href="http://download.csdn.net/detail/u010343006/9425336" target="_blank" rel="external">spring-cglib-repack-3.2.0.jar</a><br><a href="http://z.download.csdn.net/detail/u010343006/9425338" target="_blank" rel="external">spring-objenesis-repack-2.2.jar</a></p>
+<p>按照错误提示，需要将jar包放入指定的文件夹。<br>在spring-core目录下新建<code>build</code>文件夹，并在文件夹中新建<code>lib</code>文件夹，将下载的jar包放入文件夹内，最终如下：<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_5.PNG" alt="本地目录结构"></p>
+<p>下载及放置jar包都没问题，关键是后面怎么做，让我这菜鸟很是烦恼，百般尝试后终于解决（泪奔ing）。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>回到刚才的<code>项目右击-Build path-Config build path</code>，然后在<code>Libraries</code> tab下选中出错的jar包，点击右侧的edit，切换目录至<code>spring-core/build/lib/</code>文件夹下，选中对应的刚刚放置好的jar包，两个jar包均这么做。然后apply，OK即可。</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_6.PNG" alt="Done"></p>
+<p><strong>然而这样的话，后面的其他出现类似问题的项目每次都要这么解决，很是麻烦。希望有更好的解决方法的朋友分享你的方法，感谢。</strong><br>至此问题圆满解决。</p>
+<p>后面是小插曲，觉得蛮有意思的，特此记录。</p>
+<h2 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h2><p>突然发现<code>spring-framework-4.2.5.RELEASE</code>版本居然没问题，之前在master分支直接下载的源码，进行完上述步骤后出现了下面的问题：<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_7.PNG" alt="spring源码master分支的某个错误"></p>
+<p>方法内部：<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_8.PNG" alt="spring源码master分支的某个方法错误"></p>
+<p>具体问题：<br>错误1：<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_9.PNG" alt="master分支spring-core错误1"><br>错误2：<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_10.PNG" alt="master分支spring-core错误2"></p>
+<h3 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h3><p>2016年3月2号，下午两点，再去github查看master分支的源码，发现问题已经解决。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_Spring%20%E6%BA%90%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Spring%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5_11.PNG" alt="github-问题解决"></p>
+<p>为大神们撒花~</p>
 
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+            <a href="/tags/源码/" rel="tag">#源码</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/02/28/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/02/28/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2016/03/26/错误-找不到或无法加载主类-simple-Test/" rel="prev" title="错误: 找不到或无法加载主类 simple.Test">
+                错误: 找不到或无法加载主类 simple.Test <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -487,7 +533,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.</span> <span class="nav-text">TODO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主题-Next"><span class="nav-number">1.1.</span> <span class="nav-text">主题-Next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODOing"><span class="nav-number">1.2.</span> <span class="nav-text">TODOing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Feed-不是很想做这部分"><span class="nav-number">1.2.1.</span> <span class="nav-text">Feed 不是很想做这部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多说的评论部分，不想做"><span class="nav-number">1.2.2.</span> <span class="nav-text">多说的评论部分，不想做</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示文章的阅读量"><span class="nav-number">1.2.3.</span> <span class="nav-text">显示文章的阅读量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码显示效果"><span class="nav-number">1.3.</span> <span class="nav-text">测试代码显示效果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#絮叨"><span class="nav-number">1.</span> <span class="nav-text">絮叨</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入项目"><span class="nav-number">2.</span> <span class="nav-text">导入项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载Spring源码"><span class="nav-number">2.2.</span> <span class="nav-text">下载Spring源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译及导入"><span class="nav-number">2.3.</span> <span class="nav-text">编译及导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">3.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">4.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原因及下载jar包"><span class="nav-number">4.1.</span> <span class="nav-text">原因及下载jar包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">4.2.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小插曲"><span class="nav-number">5.</span> <span class="nav-text">小插曲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Done"><span class="nav-number">5.1.</span> <span class="nav-text">Done</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
