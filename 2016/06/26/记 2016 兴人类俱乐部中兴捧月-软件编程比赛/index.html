@@ -65,7 +65,8 @@
 <meta property="og:site_name" content="CallMeSurprise">
 <meta property="og:description" content="题目介绍这是在“2016 兴人类俱乐部中兴捧月”软件编程挑战赛中遇到的的题目之一，第二题是实现类似于“LRU”的算法，时间因素，没来的及做。
 题目详情为了进行城市规划，需要计算一个居住区的住宅项目。该居住聚集区俯视图已经制作好，并划分成n x m个网格。如果某个网格单元具有屋顶的一部分，则向其赋值1，如果是空地，则赋值0。由值为1的相邻网格单元组成的簇认定为一个单独住宅。对角放置的值为1的网格则不">
-<meta property="og:updated_time" content="2016-06-27T09:16:08.509Z">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-06-26_%E8%AE%B0%202016%20%E5%85%B4%E4%BA%BA%E7%B1%BB%E4%BF%B1%E4%B9%90%E9%83%A8%E4%B8%AD%E5%85%B4%E6%8D%A7%E6%9C%88-%E8%BD%AF%E4%BB%B6%E7%BC%96%E7%A8%8B%E6%AF%94%E8%B5%9B.PNG">
+<meta property="og:updated_time" content="2016-06-27T09:20:00.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记 2016 兴人类俱乐部中兴捧月-软件编程比赛">
 <meta name="twitter:description" content="题目介绍这是在“2016 兴人类俱乐部中兴捧月”软件编程挑战赛中遇到的的题目之一，第二题是实现类似于“LRU”的算法，时间因素，没来的及做。
@@ -306,7 +307,8 @@
 <p>测试用例2：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>结果：1。</p>
 <h1 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h1><h2 id="思路整理"><a href="#思路整理" class="headerlink" title="思路整理"></a>思路整理</h2><p>分析题目可知，题目可以抽象为给定一个二维数组（数组元素只包含0或1），然后查找数组中连在一起的1的区域的个数，上下左右这类直线方式算有效连接，而斜线则不算。</p>
-<p>测试用例1可以画图示意如下：<br>//TODO</p>
+<p>测试用例1可以画图示意如下：</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-06-26_%E8%AE%B0%202016%20%E5%85%B4%E4%BA%BA%E7%B1%BB%E4%BF%B1%E4%B9%90%E9%83%A8%E4%B8%AD%E5%85%B4%E6%8D%A7%E6%9C%88-%E8%BD%AF%E4%BB%B6%E7%BC%96%E7%A8%8B%E6%AF%94%E8%B5%9B.PNG" alt="二维数组示意图"></p>
 <p>看图可知只有2行2列和3行3列的两个数组元素符合要求。<br>测试用例2思路类似。</p>
 <h2 id="方法选择"><a href="#方法选择" class="headerlink" title="方法选择"></a>方法选择</h2><p>一种穷举才能解决的问题，要么嵌套循环来求解所有的可能情况，要么观察题目形式，找到适合的解题形式，比如此题的递归。</p>
 <p>嵌套循环需要考虑的情况略微复杂，如某层循环每次循环时可能需要重置数组变量，以及两次循环之间的循环衔接、参数统计，最是问题的是时间复杂度会达到一个很高的量级，很繁琐。</p>
