@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Linux,Ubuntu,ssh," />
 
 
 
@@ -57,28 +57,25 @@
 
 
 
-<meta name="description" content="偶然的机会，碰到了一个小问题，虽然不难，却很折磨人；而且咨询度娘之后发现网友的解决方法千奇百怪，但是查看/尝试了大约5种不同的说法却没有能够解决问题。看来还是得去求助外网：bing OR google。后来谷歌之后解决了问题，但是却又碰到了新问题，此处做个记录：主要记录解决此问题的方法，顺便描述新问题的坑，留待后面填补。
-问题描述环境描述脱离本机环境描述问题就是耍流氓。
+<meta name="description" content="前言在配置 Hadoop 集群分布时，要使用SSH免密码登录，spark也是。此处只简单介绍ssh的安装，后续的免密码登录在Spark配置文章中详细介绍、记录。
+简单介绍维基百科定义：
 
-OS：WIndows 1">
+Secure Shell（缩写为 SSH），由 IETF 的网络工作小组（Network Working Group）所制定；SSH 为一项创建在应用层和传输层基础上的安全协议，为计算机上的 Shell（壳层）提">
 <meta property="og:type" content="article">
-<meta property="og:title" content="错误: 找不到或无法加载主类 simple.Test">
-<meta property="og:url" content="http://yoursite.com/2016/03/26/错误-找不到或无法加载主类-simple-Test/index.html">
+<meta property="og:title" content="Linux环境下安装ssh">
+<meta property="og:url" content="http://yoursite.com/2016/07/01/Linux环境下安装ssh/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
-<meta property="og:description" content="偶然的机会，碰到了一个小问题，虽然不难，却很折磨人；而且咨询度娘之后发现网友的解决方法千奇百怪，但是查看/尝试了大约5种不同的说法却没有能够解决问题。看来还是得去求助外网：bing OR google。后来谷歌之后解决了问题，但是却又碰到了新问题，此处做个记录：主要记录解决此问题的方法，顺便描述新问题的坑，留待后面填补。
-问题描述环境描述脱离本机环境描述问题就是耍流氓。
+<meta property="og:description" content="前言在配置 Hadoop 集群分布时，要使用SSH免密码登录，spark也是。此处只简单介绍ssh的安装，后续的免密码登录在Spark配置文章中详细介绍、记录。
+简单介绍维基百科定义：
 
-OS：WIndows 1">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%96%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E4%B8%BB%E7%B1%BB_1.PNG">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%96%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E4%B8%BB%E7%B1%BB_2PNG.PNG">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%96%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E4%B8%BB%E7%B1%BB_3.PNG">
-<meta property="og:updated_time" content="2016-03-26T14:07:15.474Z">
+Secure Shell（缩写为 SSH），由 IETF 的网络工作小组（Network Working Group）所制定；SSH 为一项创建在应用层和传输层基础上的安全协议，为计算机上的 Shell（壳层）提">
+<meta property="og:updated_time" content="2016-07-01T13:09:07.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="错误: 找不到或无法加载主类 simple.Test">
-<meta name="twitter:description" content="偶然的机会，碰到了一个小问题，虽然不难，却很折磨人；而且咨询度娘之后发现网友的解决方法千奇百怪，但是查看/尝试了大约5种不同的说法却没有能够解决问题。看来还是得去求助外网：bing OR google。后来谷歌之后解决了问题，但是却又碰到了新问题，此处做个记录：主要记录解决此问题的方法，顺便描述新问题的坑，留待后面填补。
-问题描述环境描述脱离本机环境描述问题就是耍流氓。
+<meta name="twitter:title" content="Linux环境下安装ssh">
+<meta name="twitter:description" content="前言在配置 Hadoop 集群分布时，要使用SSH免密码登录，spark也是。此处只简单介绍ssh的安装，后续的免密码登录在Spark配置文章中详细介绍、记录。
+简单介绍维基百科定义：
 
-OS：WIndows 1">
+Secure Shell（缩写为 SSH），由 IETF 的网络工作小组（Network Working Group）所制定；SSH 为一项创建在应用层和传输层基础上的安全协议，为计算机上的 Shell（壳层）提">
 
 
 
@@ -96,7 +93,7 @@ OS：WIndows 1">
   };
 </script>
 
-  <title> 错误: 找不到或无法加载主类 simple.Test | CallMeSurprise </title>
+  <title> Linux环境下安装ssh | CallMeSurprise </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +233,7 @@ OS：WIndows 1">
             
             
               
-                错误: 找不到或无法加载主类 simple.Test
+                Linux环境下安装ssh
               
             
           </h1>
@@ -248,8 +245,8 @@ OS：WIndows 1">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-26T19:05:20+08:00" content="2016-03-26">
-              2016-03-26
+            <time itemprop="dateCreated" datetime="2016-07-01T20:14:23+08:00" content="2016-07-01">
+              2016-07-01
             </time>
           </span>
 
@@ -282,7 +279,7 @@ OS：WIndows 1">
 
           
           
-             <span id="/2016/03/26/错误-找不到或无法加载主类-simple-Test/" class="leancloud_visitors" data-flag-title="错误: 找不到或无法加载主类 simple.Test">
+             <span id="/2016/07/01/Linux环境下安装ssh/" class="leancloud_visitors" data-flag-title="Linux环境下安装ssh">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -302,17 +299,35 @@ OS：WIndows 1">
       
 
       
-        <p>偶然的机会，碰到了一个小问题，虽然不难，却很折磨人；而且咨询度娘之后发现网友的解决方法千奇百怪，但是查看/尝试了大约5种不同的说法却没有能够解决问题。看来还是得去求助外网：<code>bing</code> OR <code>google</code>。后来谷歌之后解决了问题，但是却又碰到了新问题，此处做个记录：主要记录解决此问题的方法，顺便描述新问题的坑，留待后面填补。</p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><h3 id="环境描述"><a href="#环境描述" class="headerlink" title="环境描述"></a>环境描述</h3><p>脱离本机环境描述问题就是耍流氓。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在配置 Hadoop 集群分布时，要使用SSH免密码登录，spark也是。此处只简单介绍ssh的安装，后续的免密码登录在Spark配置文章中详细介绍、记录。</p>
+<h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>维基百科定义：</p>
 <blockquote>
-<p>OS：WIndows 10；<br>Java Version：1.8.0_60，Java 8；<br>Eclipse：Mars。</p>
+<p>Secure Shell（缩写为 SSH），由 IETF 的网络工作小组（Network Working Group）所制定；SSH 为一项创建在应用层和传输层基础上的安全协议，为计算机上的 Shell（壳层）提供安全的传输和使用环境。</p>
 </blockquote>
-<h3 id="问题简介"><a href="#问题简介" class="headerlink" title="问题简介"></a>问题简介</h3><p>之前在eclipse里建立了一个名为<code>simple_test</code>项目，里面只有一个Test.java类，用来测试一些小的idea、验证有疑问的想法。正常编译运行都没问题，如果就此打住估计也没后面的故事了，也就不需要记录了。<br>下午的时候手贱、同时也是为了给同学演示其他问题，手动删除了根目录下与<code>src</code>同级目录的<code>bin</code>目录：<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%96%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E4%B8%BB%E7%B1%BB_1.PNG" alt="项目结构"><br>然后就悲剧了，回到eclipse下<code>run as</code>开始报错:<br><code>错误: 找不到或无法加载主类 Test.java</code>。<br>不管是eclipse还是直接在该项目的根目录下运行<code>java src\simple\Test.java</code>都是报错。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%96%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E4%B8%BB%E7%B1%BB_2PNG.PNG" alt="删除后的项目"><br>~~o(&gt;_&lt;)o ~~</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="检查源码"><a href="#检查源码" class="headerlink" title="检查源码"></a>检查源码</h3><p>检查源码，查看是否有拼写错误、类名和文件名不同等诸如此类的人为错误。<br>检查之后发现确实没有错误，毕竟是之前编译运行都能正常通过的。</p>
-<h3 id="检查JAR"><a href="#检查JAR" class="headerlink" title="检查JAR"></a>检查JAR</h3><p>此方法还是蛮有道理的方案：<code>项目右击 -build path -configure build path</code>，检查<code>Libraries</code>标签下的jar包有没有报错，报错的根据需要定位到此错误、导入正确jar包，或直接删除。<br>然而此方法并没有奏效，没有出现错误的jar包。</p>
-<h3 id="“解决”方法"><a href="#“解决”方法" class="headerlink" title="“解决”方法"></a>“解决”方法</h3><p>这里是真正有效解决问题的方法，但却没能完全打消心中的疑惑。<br><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-03-26_post_%E6%89%BE%E4%B8%8D%E5%88%B0%E6%88%96%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD%E4%B8%BB%E7%B1%BB_3.PNG" alt="enter description here"><br>在eclipse下的菜单栏：<code>Project - Clean - Clean all projects -ok</code>,bingo，问题解决。如果打开了很多项目的话，同时clean会浪费很多时间，可以选择<code>Project - Clean - Clean projects selected below</code>，然后单独选中项目，<code>ok</code>即可。</p>
-<h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><p>按理说这种问题直接在<code>cmd</code>中<code>javac</code>然后<code>java</code>也可以解决，但是在问题重现解决问题时发现win 10的系统环境配置和新版本的Java的配置不同于以往：<br>win 10下直接根据提示安装<code>jdk-8u60-windows-x64.exe</code>到默认目录(一方面固态硬盘，另一方面每次折腾太心累，没重复以往的自定义安装软件目录)后，是可以直接打开eclipse编写代码并编译运行的。eclipse和IntelliJ IDEA在使用过程中未遇到过因Java和系统而产生的错误。<br>查看系统变量-<code>Path</code>，发现win 10+jdk 8_60的组合中，自动生成的路径为：<code>C:\ProgramData\Oracle\Java\javapath</code>，进入目录发现有三个快捷方式，<code>java.exe</code>、<code>javaw.exe</code>、<code>javaws.exe</code>，定位发现均位于<code>C:\Program Files\Java\jre1.8.0_60\bin</code>下。<br>一种不同于以往自定义方式的系统变量配置。<br>新系统下之前从未配置过<code>JAVA_HOME</code>等信息，因而此处引出的<code>javac</code>命令调用不到、java环境配置缺失、win 10下系统环境变量等问题以及不知是win 10还是新版java的问题，新知识的涌现，暴露了自己的知识学习中的一个不大不小的坑，需要后续学习来填补。<br>再次显示了自己蜡鸡的一面啊，==。欢迎能详细回答此问题的大神指点迷津。</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p>感谢此文的原创博主，此文貌似已经看不出原作者是谁。不过非常认同作者静下心来思考问题的心态，自己动手排除问题，32个赞！<br>参考文章：<a href="http://www.lxway.com/594411946.htm" target="_blank" rel="external">错误: 找不到或无法加载主类- 蓝讯</a></p>
+<p>SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。<br>SSH 有很多功能，它既可以代替 Telnet，又可以为 FTP、POP、甚至为 PPP 提供一个安全的 “通道”。</p>
+<p>SSH 分为客户端和服务端。<br>服务端是一个守护进程，一般是 sshd 进程，在后台运行并响应来自客户端的请求。提供了对远程请求的处理，一般包括公共密钥认证、密钥交换、对称密钥加密和非安全连接。<br>客户端一般是 ssh 进程，另外还包含 scp、slogin、sftp 等其他进程。</p>
+<h1 id="SSH安装及配置"><a href="#SSH安装及配置" class="headerlink" title="SSH安装及配置"></a>SSH安装及配置</h1><p>SSH 分客户端 openssh-client 和 openssh-server<br>好像是Ubuntu等Linux系统已经有了openssh-server服务，因此只需要安装ssh服务即可。</p>
+<h2 id="安装ssh"><a href="#安装ssh" class="headerlink" title="安装ssh"></a>安装ssh</h2><p>按照王家林spark书本介绍，使用下面的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt-get install ssh</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这里是管理员账号，因此不需要使用<code>sudo</code>提升权限。普通用户注意在前面加上<code>sodo</code>。</p>
+</blockquote>
+<p>或者使用下面的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt-get install openssh-client</span><br></pre></td></tr></table></figure></p>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><p>管理员权限下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># /etc/init.d/ssh stop          //&#20572;&#27490;&#10;# /etc/init.d/ssh start         //&#21551;&#21160;&#10;# /etc/init.d/ssh restart       //&#37325;&#21551;</span><br></pre></td></tr></table></figure></p>
+<p>OR<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># service ssh start&#10;# service ssh stop&#10;# service ssh restart</span><br></pre></td></tr></table></figure></p>
+<p>如果有警告提示的话，可以尝试第二种service方式。警告提示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@Tbox:~/.ssh# /etc/init.d/ssh start&#10;Rather than invoking init scripts through /etc/init.d, use the service(8)&#10;utility, e.g. service ssh start&#10;&#10;Since the script you are attempting to invoke has been converted to an&#10;Upstart job, you may also use the start(8) utility, e.g. start ssh&#10;ssh start/running, process 3717</span><br></pre></td></tr></table></figure></p>
+<p>即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@Tbox:~# service ssh start</span><br></pre></td></tr></table></figure></p>
+<p>此时则不会出现刚才的提示。</p>
+<h2 id="验证是否安装成功"><a href="#验证是否安装成功" class="headerlink" title="验证是否安装成功"></a>验证是否安装成功</h2><p>成功的提示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@Tbox:~/.ssh# ssh localhost&#10;root@localhost&#39;s password: &#10;Welcome to Ubuntu 12.04.5 LTS (GNU/Linux 3.13.0-32-generic x86_64)&#10;&#10; * Documentation:  https://help.ubuntu.com/&#10;&#10;298 packages can be updated.&#10;251 updates are security updates.&#10;&#10;New release &#39;14.04.4 LTS&#39; available.&#10;Run &#39;do-release-upgrade&#39; to upgrade to it.&#10;&#10;&#10;Your Hardware Enablement Stack (HWE) is supported until April 2017.&#10;&#10;Last login: Wed Jun 29 13:55:07 2016 from localhost&#10;root@Tbox:~#</span><br></pre></td></tr></table></figure></p>
+<p>之后继续进行的所有的操作都是通过ssh登录本机进行的。</p>
+<h2 id="查看服务"><a href="#查看服务" class="headerlink" title="查看服务"></a>查看服务</h2><p>可以通过命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ps -e|grep ssh</span><br></pre></td></tr></table></figure></p>
+<p>查看ssh相关服务有没有开启，或者针对性的关闭多余服务（#kill -9 3717）</p>
+<p>其实上面第一种方式操作开启ssh服务的时候，服务已经启动起来了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@Tbox:~/.ssh# ps -e|grep ssh&#10;&#10;  2660 ?        00:00:00 ssh-agent&#10;  3717 ?        00:00:00 sshd</span><br></pre></td></tr></table></figure></p>
+<h2 id="退出ssh"><a href="#退出ssh" class="headerlink" title="退出ssh"></a>退出ssh</h2><p>直接在终端中输入exit即可</p>
+<p>演示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@Tbox:~# ps -e|grep ssh&#10;  2660 ?        00:00:00 ssh-agent&#10;  3745 ?        00:00:00 sshd&#10;  3748 pts/0    00:00:00 ssh&#10;  3749 ?        00:00:00 sshd&#10;root@Tbox:~# exit&#10;logout&#10;Connection to localhost closed.&#10;root@Tbox:~/.ssh# ps -e|grep ssh&#10;  2660 ?        00:00:00 ssh-agent&#10;  3745 ?        00:00:00 sshd&#10;root@Tbox:~/.ssh#</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>修改/etc/ssh/sshd_config文件进行参数配置，具体配置根据需要查询资料即可。</p>
+<p>之后可以配置公钥私钥，使服务器相互访问。</p>
+<p>更多地资料可以查看官方文档，或者参考相关博客。</p>
+<p>本文参考文章：<br><a href="http://www.cnblogs.com/rond/p/3688529.html" target="_blank" rel="external">http://www.cnblogs.com/rond/p/3688529.html</a><br><a href="http://www.cnblogs.com/xiazh/archive/2010/08/13/1798844.html" target="_blank" rel="external">http://www.cnblogs.com/xiazh/archive/2010/08/13/1798844.html</a><br><a href="http://jingyan.baidu.com/article/9c69d48fb9fd7b13c8024e6b.html" target="_blank" rel="external">http://jingyan.baidu.com/article/9c69d48fb9fd7b13c8024e6b.html</a></p>
 
       
     </div>
@@ -321,7 +336,11 @@ OS：WIndows 1">
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag">#Java</a>
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
+          
+            <a href="/tags/ssh/" rel="tag">#ssh</a>
           
         </div>
       
@@ -330,17 +349,13 @@ OS：WIndows 1">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/01/Spring 源码深度解析-Spring源码导入/" rel="next" title="Spring 源码深度解析-Spring源码导入">
-                <i class="fa fa-chevron-left"></i> Spring 源码深度解析-Spring源码导入
+              <a href="/2016/06/30/Linux环境下安装Java/" rel="next" title="Linux环境下安装Java">
+                <i class="fa fa-chevron-left"></i> Linux环境下安装Java
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/26/记 2016 兴人类俱乐部中兴捧月-软件编程比赛/" rel="prev" title="记 2016 兴人类俱乐部中兴捧月-软件编程比赛">
-                记 2016 兴人类俱乐部中兴捧月-软件编程比赛 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -507,7 +522,7 @@ OS：WIndows 1">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境描述"><span class="nav-number">1.1.</span> <span class="nav-text">环境描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题简介"><span class="nav-number">1.2.</span> <span class="nav-text">问题简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查源码"><span class="nav-number">2.1.</span> <span class="nav-text">检查源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查JAR"><span class="nav-number">2.2.</span> <span class="nav-text">检查JAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“解决”方法"><span class="nav-number">2.3.</span> <span class="nav-text">“解决”方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反思"><span class="nav-number">3.</span> <span class="nav-text">反思</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.1.</span> <span class="nav-text">简单介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSH安装及配置"><span class="nav-number">2.</span> <span class="nav-text">SSH安装及配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ssh"><span class="nav-number">2.1.</span> <span class="nav-text">安装ssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动服务"><span class="nav-number">2.2.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证是否安装成功"><span class="nav-number">2.3.</span> <span class="nav-text">验证是否安装成功</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看服务"><span class="nav-number">2.4.</span> <span class="nav-text">查看服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#退出ssh"><span class="nav-number">2.5.</span> <span class="nav-text">退出ssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.6.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
