@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,Linux,Ubuntu," />
 
 
 
@@ -57,18 +57,16 @@
 
 
 
-<meta name="description" content="这是测试图片的。">
+<meta name="description" content="前言Linux系统中Java环境的配置真的是非常基础但又非常重要，而且因为非常基础，所以在配置新的Linux工作环境的时候，不可避免的就要把相关基础配置重复一遍，有点像是建房子的地基建设，不可避免要重复很多遍。之前一直是需要的时候临时查找资料，后面发展到本地做个文档记录下大致步骤，最近学习Spark，又一轮的环境配置及Linux一些基础工具的安装，之前散乱的知识点串联了一遍。刚好趁此机会，把以前想">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes">
-<meta property="og:url" content="http://yoursite.com/2016/02/25/Notes/index.html">
+<meta property="og:title" content="Linux环境下安装Java">
+<meta property="og:url" content="http://yoursite.com/2016/06/30/Linux环境下安装Java/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
-<meta property="og:description" content="这是测试图片的。">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg">
-<meta property="og:updated_time" content="2016-02-28T08:31:28.331Z">
+<meta property="og:description" content="前言Linux系统中Java环境的配置真的是非常基础但又非常重要，而且因为非常基础，所以在配置新的Linux工作环境的时候，不可避免的就要把相关基础配置重复一遍，有点像是建房子的地基建设，不可避免要重复很多遍。之前一直是需要的时候临时查找资料，后面发展到本地做个文档记录下大致步骤，最近学习Spark，又一轮的环境配置及Linux一些基础工具的安装，之前散乱的知识点串联了一遍。刚好趁此机会，把以前想">
+<meta property="og:updated_time" content="2016-07-01T04:02:42.930Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Notes">
-<meta name="twitter:description" content="这是测试图片的。">
+<meta name="twitter:title" content="Linux环境下安装Java">
+<meta name="twitter:description" content="前言Linux系统中Java环境的配置真的是非常基础但又非常重要，而且因为非常基础，所以在配置新的Linux工作环境的时候，不可避免的就要把相关基础配置重复一遍，有点像是建房子的地基建设，不可避免要重复很多遍。之前一直是需要的时候临时查找资料，后面发展到本地做个文档记录下大致步骤，最近学习Spark，又一轮的环境配置及Linux一些基础工具的安装，之前散乱的知识点串联了一遍。刚好趁此机会，把以前想">
 
 
 
@@ -86,7 +84,7 @@
   };
 </script>
 
-  <title> Notes | CallMeSurprise </title>
+  <title> Linux环境下安装Java | CallMeSurprise </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -226,7 +224,7 @@
             
             
               
-                Notes
+                Linux环境下安装Java
               
             
           </h1>
@@ -238,11 +236,30 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-25T21:21:59+08:00" content="2016-02-25">
-              2016-02-25
+            <time itemprop="dateCreated" datetime="2016-06-30T10:04:23+08:00" content="2016-06-30">
+              2016-06-30
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -253,7 +270,7 @@
 
           
           
-             <span id="/2016/02/25/Notes/" class="leancloud_visitors" data-flag-title="Notes">
+             <span id="/2016/06/30/Linux环境下安装Java/" class="leancloud_visitors" data-flag-title="Linux环境下安装Java">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -271,56 +288,78 @@
 
       
       
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg" rel="gallery_ciq388654000skouoxbs2co44"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-            
-              <a class="post-gallery-img fancybox"
-                 href="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg" rel="gallery_ciq388654000skouoxbs2co44"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><h3 id="主题-Next"><a href="#主题-Next" class="headerlink" title="主题-Next"></a>主题-Next</h3><pre><code>http://theme-next.iissnan.com/
-</code></pre><h3 id="TODOing"><a href="#TODOing" class="headerlink" title="TODOing"></a>TODOing</h3><h4 id="Feed-不是很想做这部分"><a href="#Feed-不是很想做这部分" class="headerlink" title="Feed 不是很想做这部分"></a>Feed 不是很想做这部分</h4><h4 id="多说的评论部分，不想做"><a href="#多说的评论部分，不想做" class="headerlink" title="多说的评论部分，不想做"></a>多说的评论部分，不想做</h4><h4 id="显示文章的阅读量"><a href="#显示文章的阅读量" class="headerlink" title="显示文章的阅读量"></a>显示文章的阅读量</h4><p>主页和文章展开的时候在标题下方显示文章阅读人数。<br><a href="http://www.jeyzhang.com/hexo-next-add-post-views.html" target="_blank" rel="external">http://www.jeyzhang.com/hexo-next-add-post-views.html</a><br>参照此处链接，可以实现。不过目前（2016-02-28）的hexo-next主题已经支持，只需要根据上述教程注册账号，填写好app-*信息即可。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Linux系统中Java环境的配置真的是非常基础但又非常重要，而且因为非常基础，所以在配置新的Linux工作环境的时候，不可避免的就要把相关基础配置重复一遍，有点像是建房子的地基建设，不可避免要重复很多遍。<br>之前一直是需要的时候临时查找资料，后面发展到本地做个文档记录下大致步骤，最近学习Spark，又一轮的环境配置及Linux一些基础工具的安装，之前散乱的知识点串联了一遍。刚好趁此机会，把以前想要整理、但一直拖拉没下手的零散知识点统一整理一遍，po出来做个记录。</p>
+<p>这应该是本次记录的第一篇，多说几句废话。<br>本文的一些前序工作，如Linux系统的安装，不论是虚拟机，还是双系统，都大同小异，而且参考资料已经很多了，因此不再记述。<br>本文中的Linux系统是Ubuntu 12.04，64位，因此有些命令可能不适用于其他版本的系统，稍作变通即可。<br>本文主要是做记录给自己看，因此其中的很多细节不会描述太过详细。</p>
+<p>下面进入正文。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="Java下载"><a href="#Java下载" class="headerlink" title="Java下载"></a>Java下载</h2><p>到oracle官网选择Java SE版本的JDK，然后根据系统及位数选择相应版本的安装包，如此处的<code>jdk-8u91-linux-x64.tar.gz</code>。这里我选择了最新版，也可以根据自己的需要下载特定版本的JDK。</p>
+<h2 id="解压缩及安装位置"><a href="#解压缩及安装位置" class="headerlink" title="解压缩及安装位置"></a>解压缩及安装位置</h2><h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><p>在Linux系统中，使用命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar -zxvf jdk-8u91-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压即可。<br>注意前面的<code>$</code>是系统提示符，具体使用中不要带入<code>$</code>符。</p>
 <blockquote>
-<p>如果刷新后，未达到效果，可等待几分钟再刷新即可。</p>
+<p>具体的解压缩命令又是可以重新开一篇文章讲解的事情。这里能用即可。</p>
 </blockquote>
-<h3 id="测试代码显示效果"><a href="#测试代码显示效果" class="headerlink" title="测试代码显示效果"></a>测试代码显示效果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">    * 输出一行字符串“Hello World!”</span><br><span class="line">    * <span class="doctag">@param</span> args</span><br><span class="line">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	System.out.println(<span class="string">"Hello World!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="安装目录选择"><a href="#安装目录选择" class="headerlink" title="安装目录选择"></a>安装目录选择</h3><p>之前一直是将解压后的文件夹放置在系统<code>/opt</code>目录下，然后自己新建文件夹，如<code>java</code>，存放，因此最终目录如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/java/jdk1.8.0_91</span><br></pre></td></tr></table></figure></p>
+<p>这次参照<strong>王家林</strong>的书中的方案，选择放置在<code>/usr/lib/java</code>目录下，因此最终效果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/java/jdk1.8.0_91</span><br></pre></td></tr></table></figure></p>
+<p>在终端中进入刚刚解压时的目录，通过<code>cp</code>命令将解压后的文件夹复制过去或者使用<code>mv</code>命令也可以。不过<code>mv</code>操作失败的话就要重新解压，因此还是选择<code>cp</code>将文件夹复制过去。</p>
+<p>命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cp -rf jdk1.8.0_91 /usr/lib/java/</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>将目录信息以环境变量的形式写进配置文件，这里有两种方式，对应着两个不同的文件，一个是<code>~/.bashrc</code>，一个是<code>/etc/profile</code>。</p>
+<p>写文件也有两种方式，一种是<code>vim</code>，一种是<code>gedit</code>。</p>
+<h3 id="gedit"><a href="#gedit" class="headerlink" title="gedit"></a>gedit</h3><p>先说<code>gedit</code>。这种方式可以在终端<code>Terminal</code>中输入<code>gedit ~/.bashrc</code>或者<code>gedit /etc/profile</code>命令调用可视化的<code>gedit</code>工具写文件，之后直接复制粘贴即可，但很有可能出现权限不够的问题，不能保存文件。<br>相较而言<code>vim</code>会好很多，一直在终端中操作，不过也会因为使用<code>vim</code>不熟练而引发很多问题。所以，去学学<code>vim</code>。</p>
+<h3 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h3><p>如果是新系统，需要安装<code>vim</code>，命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install vim</span><br></pre></td></tr></table></figure></p>
+<p>如果需要卸载软件或者了解<code>vim</code>的基本编辑操作，查查其他博客资料，或者，去学学<code>Linux</code>和<code>vim</code>。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><ol>
+<li>写配置文件</li>
+</ol>
+<p>在Linux终端中输入<code>vim ~/.bashrc</code>进入配置文件，把JDK的环境变量加入其中，保存并退出。文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if [ -f /etc/bash_completion ] &#38;&#38; ! shopt -oq posix; then&#10;#    . /etc/bash_completion&#10;#fi&#10;&#10;export JAVA_HOME=/usr/lib/java/jdk1.8.0_91&#10;export PATH=$JAVA_HOME/bin:$PATH&#10;export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&#10;export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br></pre></td></tr></table></figure></p>
+<p>前面的#开头的语句是系统写入，后面的四句<code>export</code>是需要写入的内容。</p>
+<ol>
+<li>使配置生效</li>
+</ol>
+<p>然后在终端中输入<code>source ~/.bashrc</code>命令使配置文件生效。当然也可以直接重启系统使之生效，会很麻烦，不推荐。</p>
+<ol>
+<li>查看配置是否有效</li>
+</ol>
+<p>在终端中输入<code>java -version</code>查看刚刚配置的JDK版本。效果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# java -version&#10;java version &#34;1.8.0_91&#34;&#10;Java(TM) SE Runtime Environment (build 1.8.0_91-b14)&#10;Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)</span><br></pre></td></tr></table></figure></p>
+<p>如果没有出现上述信息，则需要重新检查<code>~/.bashrc</code>文件配置。<br>出现上述信息则表示JDK配置成功，本次工作完成。可以进行下一波任务了。</p>
+<ol>
+<li>注</li>
+</ol>
+<p>此处主要记录一些主要的步骤，而且主要功能是提醒自己，因此一些细节可能会显得模糊，见谅。<br>另，关于使用普通用户还是root用户进行配置操作，以及采用不同配置方式后哪些用户可以使用此JDK的问题，此处不做记录。可以另行查阅资料解决。也许后面会做记录补充一下。</p>
+<ol>
+<li>吐槽</li>
+</ol>
+<p>强行开个5吐槽一下。<br><strong>王家林</strong>书本《Spark核心源码分析与开发实战》中介绍的Java配置语句只有下面两句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/java/jdk1.8.0_91&#10;export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br></pre></td></tr></table></figure></p>
+<p>然后<code>source ~/.bashrc</code>，<code>java -version</code>，配置失败。还有一些小细节问题，这里就不吐槽了。</p>
+<p>Over，到这里Linux下安装JDK完成，可以开始愉快的玩耍了。</p>
 
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/06/26/记 2016 兴人类俱乐部中兴捧月-软件编程比赛/" rel="next" title="记 2016 兴人类俱乐部中兴捧月-软件编程比赛">
+                <i class="fa fa-chevron-left"></i> 记 2016 兴人类俱乐部中兴捧月-软件编程比赛
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/28/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -487,7 +526,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.</span> <span class="nav-text">TODO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主题-Next"><span class="nav-number">1.1.</span> <span class="nav-text">主题-Next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODOing"><span class="nav-number">1.2.</span> <span class="nav-text">TODOing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Feed-不是很想做这部分"><span class="nav-number">1.2.1.</span> <span class="nav-text">Feed 不是很想做这部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多说的评论部分，不想做"><span class="nav-number">1.2.2.</span> <span class="nav-text">多说的评论部分，不想做</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示文章的阅读量"><span class="nav-number">1.2.3.</span> <span class="nav-text">显示文章的阅读量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码显示效果"><span class="nav-number">1.3.</span> <span class="nav-text">测试代码显示效果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java下载"><span class="nav-number">2.1.</span> <span class="nav-text">Java下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压缩及安装位置"><span class="nav-number">2.2.</span> <span class="nav-text">解压缩及安装位置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解压"><span class="nav-number">2.2.1.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装目录选择"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装目录选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.3.</span> <span class="nav-text">配置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gedit"><span class="nav-number">2.3.1.</span> <span class="nav-text">gedit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim"><span class="nav-number">2.3.2.</span> <span class="nav-text">vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">2.3.3.</span> <span class="nav-text">配置文件</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
