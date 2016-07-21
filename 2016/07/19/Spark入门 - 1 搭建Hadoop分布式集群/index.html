@@ -1,0 +1,989 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,Linux,Spark,Ubuntu," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
+为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
+配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
+1&amp;#20026;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark入门 - 1 搭建Hadoop分布式集群">
+<meta property="og:url" content="http://yoursite.com/2016/07/19/Spark入门 - 1 搭建Hadoop分布式集群/index.html">
+<meta property="og:site_name" content="CallMeSurprise">
+<meta property="og:description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
+为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
+配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
+1&amp;#20026;&amp;">
+<meta property="og:updated_time" content="2016-07-21T03:16:54.860Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark入门 - 1 搭建Hadoop分布式集群">
+<meta name="twitter:description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
+为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
+配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
+1&amp;#20026;&amp;">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"remove"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Spark入门 - 1 搭建Hadoop分布式集群 | CallMeSurprise </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?519456bc49b09304aa2c24067ea3e6c4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">CallMeSurprise</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Surprise's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spark入门 - 1 搭建Hadoop分布式集群
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-19T21:45:17+08:00" content="2016-07-19">
+              2016-07-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/19/Spark入门 - 1 搭建Hadoop分布式集群/" class="leancloud_visitors" data-flag-title="Spark入门 - 1 搭建Hadoop分布式集群">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装Ubuntu系统"><a href="#安装Ubuntu系统" class="headerlink" title="安装Ubuntu系统"></a>安装Ubuntu系统</h1><p>不论是通过虚拟机方式还是直接在物理机上安装<code>Ubuntu</code>系统，网上都有丰富的教程，此处不再赘述。</p>
+<p>为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。</p>
+<h2 id="配置root用户登录"><a href="#配置root用户登录" class="headerlink" title="配置root用户登录"></a>配置root用户登录</h2><p>这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用<code>root</code>用户登录，方便以后多个服务器相互操作。如下所示。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20026;&#20102;&#31616;&#21270;&#26435;&#38480;&#38382;&#39064;&#65292;&#38656;&#35201;&#20197;root&#29992;&#25143;&#30340;&#36523;&#20221;&#30331;&#24405;&#20351;&#29992;Ubuntu&#31995;&#32479;&#12290;&#32780;&#22312;&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;Ubuntu&#27809;&#26377;&#24320;&#21551;root&#29992;&#25143;&#65292;&#36825;&#37324;&#20570;&#30456;&#20851;&#37197;&#32622;&#12290;&#22312;&#21629;&#20196;&#32456;&#31471;&#36755;&#20837;sudo -s&#21629;&#20196;&#65292;&#28982;&#21518;&#26681;&#25454;&#25552;&#31034;&#36755;&#20837;&#23494;&#30721;&#65292;&#36827;&#20837;root&#29992;&#25143;&#26435;&#38480;&#27169;&#24335;&#12290;</span><br></pre></td></tr></table></figure>
+<p>如果是<code>Ubuntu 12.04</code>（本人机器）和书本对应的<code>Ubuntu 12.10</code>，或者能够找到<code>/etc/lightdm/</code>目录下的<code>lightdm.conf</code>文件，则按照下面的方法1操作；如果该文件不存在，则按照方法2操作。</p>
+<h3 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h3><p>在命令终端输入<code>vim /etc/lightdm/lightdm.conf</code>命令（或者在<code>root</code>权限下直接<code>gedit/etc/lightdm/lightdm.conf</code>），修改<code>lightdm.conf</code>的内容为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[SeatDefaults]&#10;greeter-session=unity-greeter&#10;user-session=ubuntu&#10;greeter-show-manual-login=true</span><br></pre></td></tr></table></figure>
+<p>即添加了一行<code>greeter-show-manual-login=true</code>。</p>
+<blockquote>
+<p>此处可能需要安装<code>vim</code>，根据提示执行<code>sudo apt-get install vim</code>即可。</p>
+</blockquote>
+<p>保存文件，然后退出。在命令终端输入命令<code>passwd root</code>，设置管理员用户密码，最好与普通用户一致。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@box:~# passwd root&#10;Enter new UNIX password: &#10;Retype new UNIX password: &#10;passwd: password updated successfully&#10;root@box:~#</span><br></pre></td></tr></table></figure>
+<p>然后重启，之后登录界面会多一个<code>Login</code>选项，输入账号名<code>root</code>和密码，即可使用<code>root</code>账户登录。</p>
+<p>到这里，这部分的配置结束。</p>
+<h3 id="方法2："><a href="#方法2：" class="headerlink" title="方法2："></a>方法2：</h3><p>测试了一下最新的<code>Ubuntu 16.04</code>，发现上面的<code>lightdm.conf</code>文件不存在，然后按照网上的资料进行配置。</p>
+<p>基本步骤完全一样：打开终端，输入命令<code>sudo -s</code>。</p>
+<p>到这里可以先通过<code>passwd root</code>配置管理员账号密码。</p>
+<p>然后编辑配置文件：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf</span><br></pre></td></tr></table></figure>
+<p>之后操作与上面一样，新增一行<code>greeter-show-manual-login=true</code>。</p>
+<p>之后重启即可。</p>
+<h4 id="Error-found-when-loading-root-profile"><a href="#Error-found-when-loading-root-profile" class="headerlink" title="Error found when loading /root/.profile"></a>Error found when loading /root/.profile</h4><p>如果登录过程中提示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error found when loading /root/.profile&#10;mesg: ttyname failed: Inappropriate ioctl for device&#10;As result the session will not be configured correctly.&#10;You should fix the problem as soon as feasible.</span><br></pre></td></tr></table></figure>
+<p>则启动系统后，提取权限到<code>root</code>用户，然后通过<code>#vim /root/.profile</code>修改<code>/root/</code>目录下的<code>.profile</code>文件，将其中的<code>mesg n</code>替换成<code>tty -s &amp;&amp; mesg n</code>。重启系统，问题解决。</p>
+<p>重启ubuntu，问题解决</p>
+<h1 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h1><p>参照之前的<a href="http://callmesurprise.github.io/" target="_blank" rel="external">博客</a>，按步骤来即可。</p>
+<h1 id="搭建另外两台Ubuntu系统并配置SSH免密码登录"><a href="#搭建另外两台Ubuntu系统并配置SSH免密码登录" class="headerlink" title="搭建另外两台Ubuntu系统并配置SSH免密码登录"></a>搭建另外两台Ubuntu系统并配置SSH免密码登录</h1><p>之前的系统安装和JDK安装都大同小异，不在赘述。VMware下可以直接复制虚拟机，会简单很多，不过稍后需要自行修改某些配置。</p>
+<p>简单起见，系统和JDK的配置最好保持一致，如均采用<code>root</code>用户登录、JDK安装目录。</p>
+<h2 id="配置SSH免密码登录"><a href="#配置SSH免密码登录" class="headerlink" title="配置SSH免密码登录"></a>配置SSH免密码登录</h2><p>SSH的基本操作参照<a href="http://blog.csdn.net/surp2011/article/details/51804250" target="_blank" rel="external">另一篇博客</a>。配置成功即可。</p>
+<p>Hadoop的Master和Slave结点之间的通信，以及Spark的Master和Worker结点之间的通信，都是通过SSH来完成的。为了避免以后每次通信都要输入密码，此处配置几台服务器相互SSH免密码登录。</p>
+<blockquote>
+<p>注意下面均为在<code>sudo -s</code>之后的操作。</p>
+</blockquote>
+<p>后续的3步主要目的在于将各个主机的公钥互存。每个主机都在<code>authorized_keys</code>文件中保存自己和其他所有主机的公钥，也就是每个主机的<code>authorized_keys</code>文件都是一样的。</p>
+<h3 id="生成公钥和私钥"><a href="#生成公钥和私钥" class="headerlink" title="生成公钥和私钥"></a>生成公钥和私钥</h3><p>在终端中输入</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# ssh-keygen -t rsa -P &#39;&#39;</span><br></pre></td></tr></table></figure>
+<p>命令，然后回车一次（如果不带<code>-P</code>参数，则连续回车三次），然后在<code>/root/.ssh</code>目录下已经生成公钥文件<code>id_rsa.pub</code>和私钥文件<code>id_rsa</code>。同样的在其他所有主机上进行相同的操作，生成各自的公钥、私钥文件。</p>
+<h3 id="追加公钥"><a href="#追加公钥" class="headerlink" title="追加公钥"></a>追加公钥</h3><h4 id="追加本机公钥"><a href="#追加本机公钥" class="headerlink" title="追加本机公钥"></a>追加本机公钥</h4><p>将公钥<code>id_rsa.pub</code>追加到<code>authorized_keys</code>文件内（如果文件不存在则新建：<code>touch authorized_keys</code>）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/.ssh# cat id_rsa.pub &#62;&#62; authorized_keys</span><br></pre></td></tr></table></figure>
+<p>此时<code>authorized_keys</code>文件内已经包含<code>id_rsa.pub</code>文件的内容了。</p>
+<h4 id="追加其他主机的公钥"><a href="#追加其他主机的公钥" class="headerlink" title="追加其他主机的公钥"></a>追加其他主机的公钥</h4><p>首先将其他主机的公钥通过<code>scp</code>命令复制到本机。以slave1主机为例，主机IP为192.168.247.131：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@slave1:~/.ssh# scp id_rsa.pub root@192.168.247.131:/root/.ssh/id_rsa.pub.slave1</span><br></pre></td></tr></table></figure>
+<p>可以通过<code>ifconfig</code>命令查看本机IP。</p>
+<p>然后追加公钥：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/.ssh# cat id_rsa.pub.slave1 &#62;&#62; authorized_keys</span><br></pre></td></tr></table></figure>
+<p>其余主机操作类似。</p>
+<h4 id="共享authorized-keys文件"><a href="#共享authorized-keys文件" class="headerlink" title="共享authorized_keys文件"></a>共享authorized_keys文件</h4><p>此时主机master的<code>authorized_keys</code>文件已经包含了所有主机的公钥信息，也包括自己的。然后我们将master主机的<code>authorized_keys</code>文件复制到其余所有主机，相当于其他主机也都自己保存了所有主机的公钥。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/.ssh# scp authorized_keys root@:192.168.247.131:/root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>更换IP即可复制到其他主机。</p>
+<h3 id="测试SSH登录"><a href="#测试SSH登录" class="headerlink" title="测试SSH登录"></a>测试SSH登录</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# ssh 192.168.247.131</span><br></pre></td></tr></table></figure>
+<h1 id="安装Hadoop和搭建Hadoop分布式集群"><a href="#安装Hadoop和搭建Hadoop分布式集群" class="headerlink" title="安装Hadoop和搭建Hadoop分布式集群"></a>安装Hadoop和搭建Hadoop分布式集群</h1><p>前面的算是准备工作，这里才真正涉及到Hadoop相关配置及操作。</p>
+<p>下面的主要任务是配置Hadoop的文件和系统的相关文件两个方面。可以单独对各台主机进行配置，内容都一样；也可以直接将master主机的配置文件通过<code>scp</code>命令复制到其他主机；另外，书本提到，配置服务器集群的时候，可以使用<code>PSSH</code>简化配置。</p>
+<h2 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h2><p>1、下载Hadoop</p>
+<p>在官网下载Hadoop，选择bin版本的压缩包，如<code>hadoop-2.7.2.tar.gz</code>，解压后将文件夹放在<code>/usr/local/hadoop/</code>目录下，最终效果为：<code>/usr/local/hadoop/hadoop-2.7.2</code>。</p>
+<p>2、 配置<code>hadoop-env.sh</code></p>
+<p>在目录<code>/usr/local/hadoop/hadoop-2.7.2/etc/hadoop</code>下的文件<code>hadoop-env.sh</code>内配置JDK的安装信息。</p>
+<p>显式的配置成下面这样：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># The java implementation to use.&#10;export JAVA_HOME=/usr/lib/java/jdk1.8.0_91</span><br></pre></td></tr></table></figure>
+<p>3、 配置<code>.bashrc</code></p>
+<p>为了方便之后开机启动系统后可以立即使用Hadoop的bin目录下的命令，可以把Hadoop的bin目录配置到<code>~/.bashrc</code>文件中，修改后的配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#    . /etc/bash_completion&#10;#fi&#10;export JAVA_HOME=/usr/lib/java/jdk1.8.0_91&#10;export PATH=$JAVA_HOME/bin:/usr/local/hadoop/hadoop-2.7.2/bin:$PATH&#10;export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&#10;export JRE_HOME=$&#123;JAVA_HOME&#125;/jre&#10;&#10;export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.2</span><br></pre></td></tr></table></figure>
+<p>主要为HADOOP_HOME和PATH的配置。</p>
+<p>保存并退出。</p>
+<p>使用<code>source ~/.bashrc</code>命令使配置信息生效。</p>
+<p>使用<code>hadoop version</code>验证是否配置成功。</p>
+<h2 id="配置Hadoop分布式集群"><a href="#配置Hadoop分布式集群" class="headerlink" title="配置Hadoop分布式集群"></a>配置Hadoop分布式集群</h2><h3 id="配置主机名及IP地址"><a href="#配置主机名及IP地址" class="headerlink" title="配置主机名及IP地址"></a>配置主机名及IP地址</h3><p>以master主机的操作为例。</p>
+<p>1、 修改主机名。</p>
+<p>在<code>/etc/hostname</code>文件内只有一行，修改为想要的主机名即可。此处是为了配置Spark集群，因此命名风格规范化。此处修改成master。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# cat /etc/hostname &#10;master&#10;root@master:~#</span><br></pre></td></tr></table></figure>
+<p>2、 主机名和IP的对应关系</p>
+<p>修改<code>/etc/hosts</code>文件，在文件内添加三台主机的名字和IP地址。最终效果如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# cat /etc/hosts&#10;127.0.0.1&#9;localhost&#10;127.0.1.1&#9;Tbox&#10;192.168.247.130&#9;master&#10;192.168.247.131&#9;worker1&#9;&#10;192.168.247.132&#9;worker2&#10;&#10;# The following lines are desirable for IPv6 capable hosts&#10;::1     ip6-localhost ip6-loopback&#10;fe00::0 ip6-localnet&#10;ff00::0 ip6-mcastprefix&#10;ff02::1 ip6-allnodes&#10;ff02::2 ip6-allrouters&#10;root@master:~#</span><br></pre></td></tr></table></figure>
+<p>关键在于4~6行的配置。其中IP地址可以通过在终端中输入<code>ifconfig</code>命令查看。</p>
+<p>如果修改后，主机名没有生效的话，重启系统再开机的时候会发现主机名已经改变。</p>
+<p>3、 其余主机</p>
+<p>其余两台主机的配置类似。可以手动配置，可也以复制过去。PSSH用法不熟悉，暂不介绍。</p>
+<p>hostname文件内容不同，单独配置；hosts文件内容相同，可以直接复制。（由于上面的hosts文件内已经配置了主机名和IP的对应关系，此时可以直接以root@worker1的方式复制）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/etc# scp hosts root@worker1:/etc/</span><br></pre></td></tr></table></figure>
+<h3 id="Hadoop配置"><a href="#Hadoop配置" class="headerlink" title="Hadoop配置"></a>Hadoop配置</h3><p>1、创建namenode和datanode目录</p>
+<p>在<code>/usr/local/hadoop/hadoop-2.7.2</code>目录下新建四个目录：tmp、hdfs、hdfs/data、hdfs/name。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# mkdir tmp&#10;//&#26368;&#32456;&#25928;&#26524;&#22914;&#19979;&#10;.&#10;&#9500;&#9472;&#9472; bin&#10;&#9474;   &#9500;&#9472;&#9472; ...&#10;&#9500;&#9472;&#9472; etc&#10;&#9474;   &#9492;&#9472;&#9472; hadoop&#10;&#9500;&#9472;&#9472; hdfs&#10;&#9474;   &#9500;&#9472;&#9472; data&#10;&#9474;   &#9492;&#9472;&#9472; name&#10;&#9500;&#9472;&#9472; ...&#10;&#9492;&#9472;&#9472; tmp</span><br></pre></td></tr></table></figure>
+<p>2、 修改master的配置文件</p>
+<p>下面主要修改<code>/etc/hadoop</code>下的<code>core-site.xml</code>、<code>mapred-site.xml</code>、<code>hdfs-site.xml</code>。如果没有该文件则新建。</p>
+<p>需要配置的内容为<code>&lt;configuration&gt;</code>标签内的属性。</p>
+<p>core-site.xml：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/core-site.xml &#10;&#60;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#60;!--xxx--&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;fs.defaultFS&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;hdfs://SparkMaster:9000&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;hadoop.tmp.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/tmp&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<p>mapred-site.xml：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/mapred-site.xml&#10;&#60;?xml version=&#34;1.0&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;mapred.job.tracker&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;SparkMaster:9001&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<p>hdfs-site.xml：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/hdfs-site.xml &#10;&#60;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;dfs.replication&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;2&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;dfs.namenode.name.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/hdfs/name&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;dfs.datanode.data.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/hdfs/data&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<p>3、 masters和slaves文件</p>
+<p>masters：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/masters &#10;SparkMaster&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<p>slaves：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/slaves &#10;worker1&#10;worker2&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<h3 id="配置其他主机"><a href="#配置其他主机" class="headerlink" title="配置其他主机"></a>配置其他主机</h3><p>这部分的主要内容是重复上面的两步。</p>
+<p>第一步的主机名和IP已经配置过了。可以按照之前的介绍独立配置或者复制过去。</p>
+<p>第二步的Hadoop配置都是在hadoop-2.7.2目录下，因此可以考虑通过<code>scp</code>命令直接将整个文件夹复制到worker1和worker2。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop# scp -r hadoop-2.7.2/ root@worker1:/usr/local/hadoop/&#10;root@master:/usr/local/hadoop# scp -r hadoop-2.7.2/ root@worker2:/usr/local/hadoop/</span><br></pre></td></tr></table></figure>
+<p>最后，配置其余主机的<code>.bashrc</code>文件，将Hadoop目录写进<code>.bashrc</code>文件。也可以将master文件直接复制过去。然后<code>source .bashrc</code>使配置文件生效。</p>
+<h2 id="测试Hadoop分布式集群"><a href="#测试Hadoop分布式集群" class="headerlink" title="测试Hadoop分布式集群"></a>测试Hadoop分布式集群</h2><p>1、 在master结点格式化集群的文件系统，在命令终端输入：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# hadoop namenode -format</span><br></pre></td></tr></table></figure>
+<p>2、 启动Hadoop集群</p>
+<p>进入Hadoop的sbin目录，在终端输入命令（保证其他的主机已经开启）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# ./start-all.sh</span><br></pre></td></tr></table></figure>
+<p>3、 通过JPS命令分别查看一下三台主机的进程信息：</p>
+<p>master：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# jps&#10;4358 ResourceManager&#10;4430 Jps&#10;root@master:/usr/local/hadoop/hadoop-2.7.2/sbin#</span><br></pre></td></tr></table></figure>
+<p>worker1：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@worker1:~# jps&#10;3268 DataNode&#10;3485 NodeManager&#10;3631 Jps&#10;root@worker1:~#</span><br></pre></td></tr></table></figure>
+<p>woker2：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@worker2:~# jps&#10;3600 Jps&#10;3425 NodeManager&#10;3189 DataNode&#10;root@worker2:~#</span><br></pre></td></tr></table></figure>
+<p>至此Hadoop句群构建完毕。</p>
+<p>4、 停止Hadoop集群</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# ./stop-all.sh</span><br></pre></td></tr></table></figure>
+<h3 id="错误提示"><a href="#错误提示" class="headerlink" title="错误提示"></a>错误提示</h3><p>在开启Hadoop集群的时候，如果提示error等问题，需要停下来，根据错误提示排除问题。比如可能要手动修改上面的<code>hadoop-env.sh</code>文件<code>export HADOOP_CONF_DIR=/usr/local/hadoop/hadoop-2.7.2/etc/hadoop</code>来排除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...&#10;Error: Cannot find configuration directory: /etc/hadoop&#10;Error: Cannot find configuration directory: /etc/hadoop&#10;...</span><br></pre></td></tr></table></figure>
+<p>错误。</p>
+<p>其余错误问题根据具体提示查找资料排除即可。</p>
+<p>以上，Spark搭建的前期部分已经解决。</p>
+<p>参考文章：</p>
+<ul>
+<li>Ubuntu 15.04开机root登录 <a href="http://www.linuxdiyf.com/linux/13626.html" target="_blank" rel="external">http://www.linuxdiyf.com/linux/13626.html</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Spark/" rel="tag">#Spark</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/10/django后台入门--引言/" rel="next" title="django后台入门--引言">
+                <i class="fa fa-chevron-left"></i> django后台入门--引言
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Surprise" />
+          <p class="site-author-name" itemprop="name">Surprise</p>
+          <p class="site-description motion-element" itemprop="description">往前走，莫回头</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CallMeSurprise" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2807061172/home?topnav=1&wvr=6" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> 微博
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/surprise" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Ubuntu系统"><span class="nav-number">1.</span> <span class="nav-text">安装Ubuntu系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置root用户登录"><span class="nav-number">1.1.</span> <span class="nav-text">配置root用户登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1："><span class="nav-number">1.1.1.</span> <span class="nav-text">方法1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2："><span class="nav-number">1.1.2.</span> <span class="nav-text">方法2：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Error-found-when-loading-root-profile"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Error found when loading /root/.profile</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装JDK"><span class="nav-number">2.</span> <span class="nav-text">安装JDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建另外两台Ubuntu系统并配置SSH免密码登录"><span class="nav-number">3.</span> <span class="nav-text">搭建另外两台Ubuntu系统并配置SSH免密码登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置SSH免密码登录"><span class="nav-number">3.1.</span> <span class="nav-text">配置SSH免密码登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成公钥和私钥"><span class="nav-number">3.1.1.</span> <span class="nav-text">生成公钥和私钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#追加公钥"><span class="nav-number">3.1.2.</span> <span class="nav-text">追加公钥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#追加本机公钥"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">追加本机公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#追加其他主机的公钥"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">追加其他主机的公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#共享authorized-keys文件"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">共享authorized_keys文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试SSH登录"><span class="nav-number">3.1.3.</span> <span class="nav-text">测试SSH登录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Hadoop和搭建Hadoop分布式集群"><span class="nav-number">4.</span> <span class="nav-text">安装Hadoop和搭建Hadoop分布式集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Hadoop"><span class="nav-number">4.1.</span> <span class="nav-text">安装Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Hadoop分布式集群"><span class="nav-number">4.2.</span> <span class="nav-text">配置Hadoop分布式集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主机名及IP地址"><span class="nav-number">4.2.1.</span> <span class="nav-text">配置主机名及IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop配置"><span class="nav-number">4.2.2.</span> <span class="nav-text">Hadoop配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置其他主机"><span class="nav-number">4.2.3.</span> <span class="nav-text">配置其他主机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试Hadoop分布式集群"><span class="nav-number">4.3.</span> <span class="nav-text">测试Hadoop分布式集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误提示"><span class="nav-number">4.3.1.</span> <span class="nav-text">错误提示</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Surprise</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qLNMwyhxbtf5hzIzRIw4kN75-gzGzoHsz", "cSHLSKcfFJQymvS1MSIMHnzO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
