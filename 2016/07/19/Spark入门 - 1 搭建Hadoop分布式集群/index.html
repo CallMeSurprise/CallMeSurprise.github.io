@@ -69,7 +69,7 @@
 为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
 配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
 1&amp;#20026;&amp;">
-<meta property="og:updated_time" content="2016-07-21T03:16:54.860Z">
+<meta property="og:updated_time" content="2016-07-23T11:16:31.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark入门 - 1 搭建Hadoop分布式集群">
 <meta name="twitter:description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
@@ -325,7 +325,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error found when loading /root/.profile&#10;mesg: ttyname failed: Inappropriate ioctl for device&#10;As result the session will not be configured correctly.&#10;You should fix the problem as soon as feasible.</span><br></pre></td></tr></table></figure>
 <p>则启动系统后，提取权限到<code>root</code>用户，然后通过<code>#vim /root/.profile</code>修改<code>/root/</code>目录下的<code>.profile</code>文件，将其中的<code>mesg n</code>替换成<code>tty -s &amp;&amp; mesg n</code>。重启系统，问题解决。</p>
 <p>重启ubuntu，问题解决</p>
-<h1 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h1><p>参照之前的<a href="http://callmesurprise.github.io/" target="_blank" rel="external">博客</a>，按步骤来即可。</p>
+<h1 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h1><p>参照之前的<a href="http://blog.csdn.net/surp2011/article/details/51800214" target="_blank" rel="external">博客</a>，按步骤来即可。</p>
 <h1 id="搭建另外两台Ubuntu系统并配置SSH免密码登录"><a href="#搭建另外两台Ubuntu系统并配置SSH免密码登录" class="headerlink" title="搭建另外两台Ubuntu系统并配置SSH免密码登录"></a>搭建另外两台Ubuntu系统并配置SSH免密码登录</h1><p>之前的系统安装和JDK安装都大同小异，不在赘述。VMware下可以直接复制虚拟机，会简单很多，不过稍后需要自行修改某些配置。</p>
 <p>简单起见，系统和JDK的配置最好保持一致，如均采用<code>root</code>用户登录、JDK安装目录。</p>
 <h2 id="配置SSH免密码登录"><a href="#配置SSH免密码登录" class="headerlink" title="配置SSH免密码登录"></a>配置SSH免密码登录</h2><p>SSH的基本操作参照<a href="http://blog.csdn.net/surp2011/article/details/51804250" target="_blank" rel="external">另一篇博客</a>。配置成功即可。</p>
@@ -382,17 +382,17 @@
 <p>在<code>/usr/local/hadoop/hadoop-2.7.2</code>目录下新建四个目录：tmp、hdfs、hdfs/data、hdfs/name。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# mkdir tmp&#10;//&#26368;&#32456;&#25928;&#26524;&#22914;&#19979;&#10;.&#10;&#9500;&#9472;&#9472; bin&#10;&#9474;   &#9500;&#9472;&#9472; ...&#10;&#9500;&#9472;&#9472; etc&#10;&#9474;   &#9492;&#9472;&#9472; hadoop&#10;&#9500;&#9472;&#9472; hdfs&#10;&#9474;   &#9500;&#9472;&#9472; data&#10;&#9474;   &#9492;&#9472;&#9472; name&#10;&#9500;&#9472;&#9472; ...&#10;&#9492;&#9472;&#9472; tmp</span><br></pre></td></tr></table></figure>
 <p>2、 修改master的配置文件</p>
-<p>下面主要修改<code>/etc/hadoop</code>下的<code>core-site.xml</code>、<code>mapred-site.xml</code>、<code>hdfs-site.xml</code>。如果没有该文件则新建。</p>
+<p>下面主要修改<code>/etc/hadoop</code>下的<code>core-site.xml</code>、<code>mapred-site.xml</code>、<code>hdfs-site.xml</code>。如果没有该文件则新建，其中mapred-site.xml可以根据mapred-site.xml.template创建，即将mapred-site.xml.template复制为mapred-site.xml。</p>
 <p>需要配置的内容为<code>&lt;configuration&gt;</code>标签内的属性。</p>
 <p>core-site.xml：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/core-site.xml &#10;&#60;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#60;!--xxx--&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;fs.defaultFS&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;hdfs://SparkMaster:9000&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;hadoop.tmp.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/tmp&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/core-site.xml &#10;&#60;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#60;!--xxx--&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;fs.defaultFS&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;hdfs://master:9000&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;hadoop.tmp.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/tmp&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
 <p>mapred-site.xml：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/mapred-site.xml&#10;&#60;?xml version=&#34;1.0&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;mapred.job.tracker&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;SparkMaster:9001&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/mapred-site.xml&#10;&#60;?xml version=&#34;1.0&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;mapred.job.tracker&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;master:9001&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
 <p>hdfs-site.xml：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/hdfs-site.xml &#10;&#60;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&#62;&#10;&#60;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;configuration.xsl&#34;?&#62;&#10;&#10;&#60;!-- Put site-specific property overrides in this file. --&#62;&#10;&#10;&#60;configuration&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;dfs.replication&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;2&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;dfs.namenode.name.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/hdfs/name&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#9;&#60;property&#62;&#10;&#9;&#9;&#60;name&#62;dfs.datanode.data.dir&#60;/name&#62;&#10;&#9;&#9;&#60;value&#62;/usr/local/hadoop/hadoop-2.7.2/hdfs/data&#60;/value&#62;&#10;&#9;&#60;/property&#62;&#10;&#60;/configuration&#62;&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
 <p>3、 masters和slaves文件</p>
 <p>masters：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/masters &#10;SparkMaster&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/masters &#10;master&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
 <p>slaves：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# cat etc/hadoop/slaves &#10;worker1&#10;worker2&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
 <h3 id="配置其他主机"><a href="#配置其他主机" class="headerlink" title="配置其他主机"></a>配置其他主机</h3><p>这部分的主要内容是重复上面的两步。</p>
@@ -404,22 +404,29 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2# hadoop namenode -format</span><br></pre></td></tr></table></figure>
 <p>2、 启动Hadoop集群</p>
 <p>进入Hadoop的sbin目录，在终端输入命令（保证其他的主机已经开启）：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# ./start-all.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# ./start-all.sh &#10;This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh&#10;Starting namenodes on [master]&#10;master: starting namenode, logging to /usr/local/hadoop/hadoop-2.7.2/logs/hadoop-root-namenode-master.out&#10;worker2: starting datanode, logging to /usr/local/hadoop/hadoop-2.7.2/logs/hadoop-root-datanode-worker2.out&#10;worker1: starting datanode, logging to /usr/local/hadoop/hadoop-2.7.2/logs/hadoop-root-datanode-worker1.out&#10;Starting secondary namenodes [0.0.0.0]&#10;0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/hadoop-2.7.2/logs/hadoop-root-secondarynamenode-master.out&#10;starting yarn daemons&#10;starting resourcemanager, logging to /usr/local/hadoop/hadoop-2.7.2/logs/yarn-root-resourcemanager-master.out&#10;worker1: starting nodemanager, logging to /usr/local/hadoop/hadoop-2.7.2/logs/yarn-root-nodemanager-worker1.out&#10;worker2: starting nodemanager, logging to /usr/local/hadoop/hadoop-2.7.2/logs/yarn-root-nodemanager-worker2.out&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
 <p>3、 通过JPS命令分别查看一下三台主机的进程信息：</p>
 <p>master：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# jps&#10;4358 ResourceManager&#10;4430 Jps&#10;root@master:/usr/local/hadoop/hadoop-2.7.2/sbin#</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# jps&#10;4705 NameNode&#10;5049 SecondaryNameNode&#10;5274 Jps&#10;5198 ResourceManager&#10;root@master:/usr/local/hadoop/hadoop-2.7.2/sbin#</span><br></pre></td></tr></table></figure>
 <p>worker1：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@worker1:~# jps&#10;3268 DataNode&#10;3485 NodeManager&#10;3631 Jps&#10;root@worker1:~#</span><br></pre></td></tr></table></figure>
 <p>woker2：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@worker2:~# jps&#10;3600 Jps&#10;3425 NodeManager&#10;3189 DataNode&#10;root@worker2:~#</span><br></pre></td></tr></table></figure>
 <p>至此Hadoop句群构建完毕。</p>
 <p>4、 停止Hadoop集群</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# ./stop-all.sh</span><br></pre></td></tr></table></figure>
-<h3 id="错误提示"><a href="#错误提示" class="headerlink" title="错误提示"></a>错误提示</h3><p>在开启Hadoop集群的时候，如果提示error等问题，需要停下来，根据错误提示排除问题。比如可能要手动修改上面的<code>hadoop-env.sh</code>文件<code>export HADOOP_CONF_DIR=/usr/local/hadoop/hadoop-2.7.2/etc/hadoop</code>来排除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.7.2/sbin# ./stop-all.sh &#10;This script is Deprecated. Instead use stop-dfs.sh and stop-yarn.sh&#10;Stopping namenodes on [master]&#10;master: stopping namenode&#10;worker1: stopping datanode&#10;worker2: stopping datanode&#10;Stopping secondary namenodes [0.0.0.0]&#10;0.0.0.0: stopping secondarynamenode&#10;stopping yarn daemons&#10;stopping resourcemanager&#10;worker2: stopping nodemanager&#10;worker1: stopping nodemanager&#10;worker2: nodemanager did not stop gracefully after 5 seconds: killing with kill -9&#10;worker1: nodemanager did not stop gracefully after 5 seconds: killing with kill -9&#10;no proxyserver to stop&#10;root@master:/usr/local/hadoop/hadoop-2.7.2#</span><br></pre></td></tr></table></figure>
+<p>目前不清楚为什么出现最后的两句提示：<code>nodemanager did not stop gracefully after 5 seconds: killing with kill -9</code>，希望后面的学习过程中可以解决这个疑惑。</p>
+<h3 id="错误提示"><a href="#错误提示" class="headerlink" title="错误提示"></a>错误提示</h3><p>1、no datanode to stop</p>
+<p>如果在执行<code>stop-all.sh</code>文件的时候提示“no datanode to stop”，可以根据下面的方法排除错误。</p>
+<p>出现该错误的原因是因为每次使用<code>hadoop namenode -format</code>命令格式化文件系统的时候会出现一个新的namenodeId，而在之前的格式化过程中，在我们手动创建的tmp目录下已经有了数据，只需要把每台机器上tmp文件夹、hdfs文件夹下的data和name文件夹中的内容清空即可，同时清空系统<code>/tmp</code>文件夹下与Hadoop相关的内容清空。</p>
+<p>master主机和多个worker主机的上述文件夹内容都要清空。</p>
+<p>重新格式化并重新启动集群，即可解决问题。</p>
+<p>2、运行start-all.sh错误</p>
+<p>在开启Hadoop集群的时候，如果提示error等问题，需要停下来，根据错误提示排除问题。比如可能要手动修改上面的<code>hadoop-env.sh</code>文件中的<code>export HADOOP_CONF_DIR=/usr/local/hadoop/hadoop-2.7.2/etc/hadoop</code>来排除</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...&#10;Error: Cannot find configuration directory: /etc/hadoop&#10;Error: Cannot find configuration directory: /etc/hadoop&#10;...</span><br></pre></td></tr></table></figure>
 <p>错误。</p>
 <p>其余错误问题根据具体提示查找资料排除即可。</p>
-<p>以上，Spark搭建的前期部分已经解决。</p>
+<p>以上，Spark搭建的前期部分已经完成。</p>
 <p>参考文章：</p>
 <ul>
 <li>Ubuntu 15.04开机root登录 <a href="http://www.linuxdiyf.com/linux/13626.html" target="_blank" rel="external">http://www.linuxdiyf.com/linux/13626.html</a></li>
@@ -454,6 +461,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/21/Spark入门 - 2 Spark安装和集群部署/" rel="prev" title="Spark安装和集群部署">
+                Spark安装和集群部署 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -544,7 +555,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
