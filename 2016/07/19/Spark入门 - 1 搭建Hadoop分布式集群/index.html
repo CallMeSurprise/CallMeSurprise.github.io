@@ -57,25 +57,31 @@
 
 
 
-<meta name="description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
-为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
-配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
-1&amp;#20026;&amp;">
+<meta name="description" content="2016-07-25 更新：
+进行到Spark安装的时候，spark-1.6.2没有对应的hadoop-2.7.2的with bin版本，因此推翻重来。
+目前为hadoop-2.6.4+scala-2.10.6+spark-1.6.2-bin-hadoop2.6。
+因此，如果近期搭建环境，注意三个包的版本选择搭配。官网有具体说明，请具体查阅。如果有精力，也可以使用源码等方式自行操作。
+
+安装Ubu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark入门 - 1 搭建Hadoop分布式集群">
 <meta property="og:url" content="http://yoursite.com/2016/07/19/Spark入门 - 1 搭建Hadoop分布式集群/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
-<meta property="og:description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
-为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
-配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
-1&amp;#20026;&amp;">
-<meta property="og:updated_time" content="2016-07-23T11:16:31.836Z">
+<meta property="og:description" content="2016-07-25 更新：
+进行到Spark安装的时候，spark-1.6.2没有对应的hadoop-2.7.2的with bin版本，因此推翻重来。
+目前为hadoop-2.6.4+scala-2.10.6+spark-1.6.2-bin-hadoop2.6。
+因此，如果近期搭建环境，注意三个包的版本选择搭配。官网有具体说明，请具体查阅。如果有精力，也可以使用源码等方式自行操作。
+
+安装Ubu">
+<meta property="og:updated_time" content="2016-07-25T09:24:43.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark入门 - 1 搭建Hadoop分布式集群">
-<meta name="twitter:description" content="安装Ubuntu系统不论是通过虚拟机方式还是直接在物理机上安装Ubuntu系统，网上都有丰富的教程，此处不再赘述。
-为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。
-配置root用户登录这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用root用户登录，方便以后多个服务器相互操作。如下所示。
-1&amp;#20026;&amp;">
+<meta name="twitter:description" content="2016-07-25 更新：
+进行到Spark安装的时候，spark-1.6.2没有对应的hadoop-2.7.2的with bin版本，因此推翻重来。
+目前为hadoop-2.6.4+scala-2.10.6+spark-1.6.2-bin-hadoop2.6。
+因此，如果近期搭建环境，注意三个包的版本选择搭配。官网有具体说明，请具体查阅。如果有精力，也可以使用源码等方式自行操作。
+
+安装Ubu">
 
 
 
@@ -299,7 +305,13 @@
       
 
       
-        <h1 id="安装Ubuntu系统"><a href="#安装Ubuntu系统" class="headerlink" title="安装Ubuntu系统"></a>安装Ubuntu系统</h1><p>不论是通过虚拟机方式还是直接在物理机上安装<code>Ubuntu</code>系统，网上都有丰富的教程，此处不再赘述。</p>
+        <blockquote>
+<p>2016-07-25 更新：</p>
+<p>进行到Spark安装的时候，spark-1.6.2没有对应的hadoop-2.7.2的with bin版本，因此推翻重来。</p>
+<p>目前为hadoop-2.6.4+scala-2.10.6+spark-1.6.2-bin-hadoop2.6。</p>
+<p>因此，如果近期搭建环境，注意三个包的版本选择搭配。官网有具体说明，请具体查阅。如果有精力，也可以使用源码等方式自行操作。</p>
+</blockquote>
+<h1 id="安装Ubuntu系统"><a href="#安装Ubuntu系统" class="headerlink" title="安装Ubuntu系统"></a>安装Ubuntu系统</h1><p>不论是通过虚拟机方式还是直接在物理机上安装<code>Ubuntu</code>系统，网上都有丰富的教程，此处不再赘述。</p>
 <p>为了方便起见，此处设置的机器名最好与书本的设置一致：Master、Slave1和Slave2。</p>
 <h2 id="配置root用户登录"><a href="#配置root用户登录" class="headerlink" title="配置root用户登录"></a>配置root用户登录</h2><p>这里有一步与普通教程不同。在安装好系统，重启之后，完成了相关配置。可以进行这一步，设置使用<code>root</code>用户登录，方便以后多个服务器相互操作。如下所示。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20026;&#20102;&#31616;&#21270;&#26435;&#38480;&#38382;&#39064;&#65292;&#38656;&#35201;&#20197;root&#29992;&#25143;&#30340;&#36523;&#20221;&#30331;&#24405;&#20351;&#29992;Ubuntu&#31995;&#32479;&#12290;&#32780;&#22312;&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;Ubuntu&#27809;&#26377;&#24320;&#21551;root&#29992;&#25143;&#65292;&#36825;&#37324;&#20570;&#30456;&#20851;&#37197;&#32622;&#12290;&#22312;&#21629;&#20196;&#32456;&#31471;&#36755;&#20837;sudo -s&#21629;&#20196;&#65292;&#28982;&#21518;&#26681;&#25454;&#25552;&#31034;&#36755;&#20837;&#23494;&#30721;&#65292;&#36827;&#20837;root&#29992;&#25143;&#26435;&#38480;&#27169;&#24335;&#12290;</span><br></pre></td></tr></table></figure>
