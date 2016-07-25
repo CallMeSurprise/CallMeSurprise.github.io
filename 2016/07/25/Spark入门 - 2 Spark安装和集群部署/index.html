@@ -1,0 +1,940 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,Linux,Spark,Ubuntu," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="安装Scala版本选择Spark官方对配套的Scala版本有规定，所以要根据自己的实际情况来选择Scala版本。因此首先去Spark官网下载Spark，再根据要求下载对应版本的Scala。
+在http://spark.apache.org/docs/1.6.2/中有一句提示：
+1Spark runs on Java 7+, Python 2.6+ and R 3.1+. For the Scala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark入门 - 2 Spark安装和集群部署">
+<meta property="og:url" content="http://yoursite.com/2016/07/25/Spark入门 - 2 Spark安装和集群部署/index.html">
+<meta property="og:site_name" content="CallMeSurprise">
+<meta property="og:description" content="安装Scala版本选择Spark官方对配套的Scala版本有规定，所以要根据自己的实际情况来选择Scala版本。因此首先去Spark官网下载Spark，再根据要求下载对应版本的Scala。
+在http://spark.apache.org/docs/1.6.2/中有一句提示：
+1Spark runs on Java 7+, Python 2.6+ and R 3.1+. For the Scala">
+<meta property="og:updated_time" content="2016-07-25T12:43:25.116Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark入门 - 2 Spark安装和集群部署">
+<meta name="twitter:description" content="安装Scala版本选择Spark官方对配套的Scala版本有规定，所以要根据自己的实际情况来选择Scala版本。因此首先去Spark官网下载Spark，再根据要求下载对应版本的Scala。
+在http://spark.apache.org/docs/1.6.2/中有一句提示：
+1Spark runs on Java 7+, Python 2.6+ and R 3.1+. For the Scala">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"remove"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Spark入门 - 2 Spark安装和集群部署 | CallMeSurprise </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?519456bc49b09304aa2c24067ea3e6c4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">CallMeSurprise</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Surprise's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spark入门 - 2 Spark安装和集群部署
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-25T15:08:29+08:00" content="2016-07-25">
+              2016-07-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/25/Spark入门 - 2 Spark安装和集群部署/" class="leancloud_visitors" data-flag-title="Spark入门 - 2 Spark安装和集群部署">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装Scala"><a href="#安装Scala" class="headerlink" title="安装Scala"></a>安装Scala</h1><h2 id="版本选择"><a href="#版本选择" class="headerlink" title="版本选择"></a>版本选择</h2><p>Spark官方对配套的Scala版本有规定，所以要根据自己的实际情况来选择Scala版本。因此首先去Spark官网下载Spark，再根据要求下载对应版本的Scala。</p>
+<p>在<a href="http://spark.apache.org/docs/1.6.2/中有一句提示：" target="_blank" rel="external">http://spark.apache.org/docs/1.6.2/中有一句提示：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spark runs on Java 7+, Python 2.6+ and R 3.1+. For the Scala API, Spark 1.6.2 uses Scala 2.10. You will need to use a compatible Scala version (2.10.x).</span><br></pre></td></tr></table></figure>
+<p>意味着Spark 1.6.2版本最好选择Scala 2.10.x。当然也可以选择更高版本的2.11.x，比如2.11.8，不过需要手动编译。</p>
+<p>结合上一篇文章，Hadoop和Spark版本最好也要适配，选择pre-build版本。也可以选择source code或者自己指定Hadoop版本，这部分知识本文不再介绍。</p>
+<p>此处版本为spark-1.6.2-bin-hadoop2.6和scala-2.10.6，还有hadoop-2.6.4版本。注意自己实现的时候版本兼容选择。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>1、 将下载的压缩包解压后放入指定位置，<code>usr/lib/scala</code>。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/Documents# ls&#10;hadoop-2.4.6.tar.gz  scala-2.10.6.tgz  spark-1.6.2-bin-hadoop2.6.tgz&#10;root@master:~/Documents# tar zxvf scala-2.10.6.tgz&#10;......&#10;root@master:~/Documents# mkdir /usr/lib/scala&#10;root@master:~/Documents# mv scala-2.10.6 /usr/lib/scala/&#10;root@master:~/Documents# cd /usr/lib/scala/&#10;root@master:/usr/lib/scala# ls&#10;scala-2.10.6&#10;root@master:/usr/lib/scala#</span><br></pre></td></tr></table></figure>
+<p>2、 配置环境变量</p>
+<p>打开<code>~/.bashrc</code>文件（<strong>默认是root用户登录，因此此处绝对路径为<code>/root/.bashrc</code>，前文中没有特殊说明的情况下均采用这里的标准</strong>），配置Scala环境变量。主要为SCALA_HOME和PATH。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if [ -f /etc/bash_completion ] &#38;&#38; ! shopt -oq posix; then&#10;#    . /etc/bash_completion&#10;#fi&#10;export JAVA_HOME=/usr/lib/java/jdk1.8.0_91&#10;export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$SCALA_HOME/bin:$PATH&#10;export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&#10;export JRE_HOME=$&#123;JAVA_HOME&#125;/jre&#10;&#10;export HADOOP_HOME=/usr/local/hadoop/hadoop-2.4.6&#10;export SCALA_HOME=/usr/lib/scala/scala-2.10.6</span><br></pre></td></tr></table></figure>
+<p>然后<code>root@master:~# source .bashrc</code>，使配置生效。</p>
+<p>注意<code>$SCALA_HOME</code>这种书写方式，书本是使用<code>${SCALA_HOME}</code>。但是<code>scala -version</code>失败。这里还是自己测试一下，一种不行再试另一种，多折腾。</p>
+<p>3、 测试配置是否成功</p>
+<p>在终端输入<code>scala -version</code>查看Scala的版本信息。</p>
+<p>不成功的话，再返回上面修改。成功后，可以直接使用<code>scala</code>进入Scala的命令交互界面。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# scala&#10;Welcome to Scala version 2.10.6 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_91).&#10;Type in expressions to have them evaluated.&#10;Type :help for more information.&#10;&#10;scala&#62; 3*4&#10;res0: Int = 12&#10;&#10;scala&#62;</span><br></pre></td></tr></table></figure>
+<p>到这里基本安装成功。master主机已经配置好，其余主机也做相应配置即可。</p>
+<p>4、 迁移到其他主机</p>
+<p>另外两台worker主机也需要与master主机保持一致。因此考虑使用<code>scp</code>命令复制Scala文件夹和<code>~/.bashrc</code>文件到其余主机。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/lib# scp -r scala/ root@worker1:/usr/lib/&#10;root@master:/usr/lib# scp ~/.bashrc root@worker1:~&#10;root@master:/usr/lib# scp -r scala/ root@worker2:/usr/lib/&#10;root@master:/usr/lib# scp ~/.bashrc root@worker2:~</span><br></pre></td></tr></table></figure>
+<p>记得最后在worker主机上<code>source</code>让配置文件生效。</p>
+<p>当然也可以手动配置，重复上述过程。</p>
+<p>最后测试一下其余主机Scala是否可用。</p>
+<h1 id="安装Spark和集群部署"><a href="#安装Spark和集群部署" class="headerlink" title="安装Spark和集群部署"></a>安装Spark和集群部署</h1><p>Spark需要运行在三台机器上，这里先安装Spark到master主机上，另外两台的安装方法一样，也可以使用SSH的<code>scp</code>命令把master主机上的安装好的Spark目录复制到另外两台机器相同的目录下。</p>
+<p>1、 将下载的Spark放置在指定目录：<code>/usr/local/spark</code>。</p>
+<p>按照之前的描述，下载适配版本的Spark并解压。如此处的<code>spark-1.6.2-bin-hadoop2.6.tgz</code>。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/Documents# tar zxvf spark-1.6.2.tgz&#10;...&#10;root@master:~/Documents# mkdir /usr/local/spark&#10;root@master:~/Documents# ls&#10;hadoop-2.4.6.tar.gz  scala-2.10.6.tgz  spark-1.6.2-bin-hadoop2.6  spark-1.6.2-bin-hadoop2.6.tgz&#10;root@master:~/Documents# mv spark-1.6.2-bin-hadoop2.6 /usr/local/spark/&#10;root@master:~/Documents# cd /usr/local/spark/&#10;root@master:/usr/local/spark# ls&#10;spark-1.6.2-bin-hadoop2.6&#10;root@master:/usr/local/spark#</span><br></pre></td></tr></table></figure>
+<p>2、 配置环境变量</p>
+<p>修改<code>~/.bashrc</code>文件，添加SPARK_HOME，将spark的bin目录添加至PATH：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~# cat .bashrc&#10;...&#10;#    . /etc/bash_completion&#10;#fi&#10;export JAVA_HOME=/usr/lib/java/jdk1.8.0_91&#10;export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$SCALA_HOME/bin:$SPARK_HOME/bin:$PATH&#10;export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&#10;export JRE_HOME=$&#123;JAVA_HOME&#125;/jre&#10;&#10;export HADOOP_HOME=/usr/local/hadoop/hadoop-2.4.6&#10;export SCALA_HOME=/usr/lib/scala/scala-2.10.6&#10;export SPARK_HOME=/usr/local/spark/spark-1.6.2-bin-hadoop2.6&#10;root@master:~#</span><br></pre></td></tr></table></figure>
+<p>保存并退出。使用<code>source</code>命令使配置文件生效。</p>
+<p>3、 配置Spark   </p>
+<p>需要配置spark-env.sh文件和slaves文件，没有的话可以根据该目录下的template文件创建。</p>
+<p>进入Spark安装目录下的conf目录，根据模板创建新文件。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6# cd conf&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf# ls&#10;docker.properties.template  metrics.properties.template  spark-defaults.conf.template&#10;fairscheduler.xml.template  slaves                       spark-env.sh&#10;log4j.properties.template   slaves.template              spark-env.sh.template&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf# cp spark-env.sh.template spark-env.sh&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf# cp slaves.template slaves</span><br></pre></td></tr></table></figure>
+<p>修改spark-env.sh，在最后添加下面的信息。</p>
+<p>保存退出。</p>
+<p>最终效果如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf# cat spark-env.sh&#10;#!/usr/bin/env bash&#10;...&#10;export JAVA_HOME=/usr/lib/java/jdk1.8.0_91&#10;export HADOOP_HOME=/usr/local/hadoop/hadoop-2.4.6&#10;export SCALA_HOME=/usr/lib/scala/scala-2.10.6&#10;export HADOOP_CONF_DIR=/usr/local/hadoop/hadoop-2.7.2/etc/hadoop&#10;export SPARK_MASTER_IP=master&#10;export SPARK_WORKER_MEMORY=1g&#10;export SPARK_WORKER_CORES=1&#10;export SPARK_WORKER_INSTANCES=1&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf#</span><br></pre></td></tr></table></figure>
+<p>上面各个参数的作用在文档中已经提及。可以自行查阅进行个性化配置。</p>
+<p>修改slaves文件。</p>
+<p>最终效果如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf# vim slaves&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf# cat slaves&#10;#&#10;...&#10;# A Spark Worker will be started on each of the machines listed below.&#10;worker1&#10;worker2&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/conf#</span><br></pre></td></tr></table></figure>
+<p>这里只设置两台worker主机为工作节点。</p>
+<p>4、 配置其余主机</p>
+<p>worker1和worker2的配置与master主机完全相同。可以通过SSH的<code>scp</code>命令将Spark的安装目录和~/.bashrc文件复制到两台worker主机。</p>
+<p>这里不再赘述。</p>
+<p>5、 启动并测试集群的状况</p>
+<p>1） 当前我们只使用Hadoop的HDF文件系统，所以可以只启动master主机Hadoop的HDFS文件系统。进入Hadoop的sbin目录下，然后在shell命令终端输入<code>./start-dfs.sh</code>命令，可以看到master启动了namenodes，worker1和worker2都启动了datanode，表示HDFS文件系统已经启动。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/hadoop/hadoop-2.4.6# ./sbin/start-dfs.sh</span><br></pre></td></tr></table></figure>
+<p>这时候会启动上一篇文章中的部分服务。具体可以通过jsp查看。</p>
+<p>2） 用Spark的sbin目录下的<code>./start-all.sh</code>命令启动Spark集群。</p>
+<p>如果上面配置没有问题的话，就可以很顺利的开启服务了。</p>
+<p>提示信息也很简洁。仅供对照。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6# ./sbin/start-all.sh &#10;starting org.apache.spark.deploy.master.Master, logging to /usr/local/spark/spark-1.6.2-bin-hadoop2.6/logs/spark-root-org.apache.spark.deploy.master.Master-1-master.out&#10;worker2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-1.6.2-bin-hadoop2.6/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-worker2.out&#10;worker1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-1.6.2-bin-hadoop2.6/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-worker1.out&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6#</span><br></pre></td></tr></table></figure>
+<p>6、 简单验证</p>
+<p>1）使用JPS在master结点、worker1、2结点分别可以查看到新开启的Master和Worker进程。</p>
+<p>master：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6# jps&#10;3600 SecondaryNameNode&#10;3289 NameNode&#10;3914 Master&#10;3983 Jps&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6#</span><br></pre></td></tr></table></figure>
+<p>worker1：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@worker1:~# jps&#10;12245 Worker&#10;11592 DataNode&#10;12299 Jps&#10;root@worker1:~#</span><br></pre></td></tr></table></figure>
+<p>worker2：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@worker2:~# jps&#10;12019 Jps&#10;11325 DataNode&#10;11966 Worker&#10;root@worker2:~#</span><br></pre></td></tr></table></figure>
+<p>2）进入Spark的WebUI页面，访问<code>master:8080</code>，可以看到如下图所示的界面。</p>
+<p>//TODO</p>
+<p>3）进入Spark的bin目录，使用<code>spark-shell</code>命令可以进入spark-shell控制台。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6# ./bin/spark-shell &#10;16/07/25 20:10:29 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable&#10;16/07/25 20:10:30 INFO spark.SecurityManager: Changing view acls to: root&#10;16/07/25 20:10:30 INFO spark.SecurityManager: Changing modify acls to: root&#10;16/07/25 20:10:30 INFO spark.SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)&#10;16/07/25 20:10:31 INFO spark.HttpServer: Starting HTTP Server&#10;16/07/25 20:10:31 INFO server.Server: jetty-8.y.z-SNAPSHOT&#10;16/07/25 20:10:31 INFO server.AbstractConnector: Started SocketConnector@0.0.0.0:46693&#10;16/07/25 20:10:31 INFO util.Utils: Successfully started service &#39;HTTP class server&#39; on port 46693.&#10;Welcome to&#10;      ____              __&#10;     / __/__  ___ _____/ /__&#10;    _\ \/ _ \/ _ `/ __/  &#39;_/&#10;   /___/ .__/\_,_/_/ /_/\_\   version 1.6.2&#10;      /_/&#10;&#10;Using Scala version 2.10.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_91)&#10;Type in expressions to have them evaluated.&#10;Type :help for more information.&#10;16/07/25 20:10:52 INFO spark.SparkContext: Running Spark version 1.6.2&#10;16/07/25 20:10:53 WARN spark.SparkConf: &#10;SPARK_WORKER_INSTANCES was detected (set to &#39;1&#39;).&#10;This is deprecated in Spark 1.0+.&#10;&#10;Please instead use:&#10; - ./spark-submit with --num-executors to specify the number of executors&#10; - Or set SPARK_EXECUTOR_INSTANCES&#10; - spark.executor.instances to configure the number of instances in the spark config.&#10;        &#10;16/07/25 20:10:53 INFO spark.SecurityManager: Changing view acls to: root&#10;16/07/25 20:10:53 INFO spark.SecurityManager: Changing modify acls to: root&#10;......</span><br></pre></td></tr></table></figure>
+<p>然后可以在WebUI页面输入<code>master:4040</code>从Web的角度了解Spark-Shell，也可以查看environment。如下图所示：</p>
+<p>//TODO</p>
+<p>//TODO</p>
+<p>到这里，Spark集群部署成功，下面进行集群的测试。</p>
+<h2 id="错误提示"><a href="#错误提示" class="headerlink" title="错误提示"></a>错误提示</h2><p>如果执行完<code>./sbin/start-dfs.sh</code>后，再执行<code>./sbin/start-all.sh</code>的时候出错，如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2# ./sbin/start-all.sh&#10;starting org.apache.spark.deploy.master.Master, logging to /usr/local/spark/spark-1.6.2/logs/spark-root-org.apache.spark.deploy.master.Master-1-master.out&#10;failed to launch org.apache.spark.deploy.master.Master:&#10;  Failed to find Spark assembly in /usr/local/spark/spark-1.6.2/assembly/target/scala-2.10.&#10;  You need to build Spark before running this program.&#10;full log in /usr/local/spark/spark-1.6.2/logs/spark-root-org.apache.spark.deploy.master.Master-1-master.out&#10;worker1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-1.6.2/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-worker1.out&#10;worker2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-1.6.2/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-worker2.out&#10;worker1: failed to launch org.apache.spark.deploy.worker.Worker:&#10;worker1:   Failed to find Spark assembly in /usr/local/spark/spark-1.6.2/assembly/target/scala-2.10.&#10;worker1:   You need to build Spark before running this program.&#10;worker1: full log in /usr/local/spark/spark-1.6.2/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-worker1.out&#10;worker2: failed to launch org.apache.spark.deploy.worker.Worker:&#10;worker2:   Failed to find Spark assembly in /usr/local/spark/spark-1.6.2/assembly/target/scala-2.10.&#10;worker2:   You need to build Spark before running this program.&#10;worker2: full log in /usr/local/spark/spark-1.6.2/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-worker2.out&#10;root@master:/usr/local/spark/spark-1.6.2#</span><br></pre></td></tr></table></figure>
+<p>问题的原因在于文章开始的时候提到的Spark版本和Hadoop版本不兼容。资料介绍说Hadoop版本迭代的时候某些组件变化较大，因此Spark版本最好选择spark-1.6.2-bin-hadoop2.6这种和Hadoop绑定的版本。</p>
+<p>参考文章：</p>
+<ul>
+<li>Spark（一）：Spark的安装部署。 <a href="http://my.oschina.net/gently/blog/686192" target="_blank" rel="external">http://my.oschina.net/gently/blog/686192</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Spark/" rel="tag">#Spark</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/19/Spark入门 - 1 搭建Hadoop分布式集群/" rel="next" title="Spark入门 - 1 搭建Hadoop分布式集群">
+                <i class="fa fa-chevron-left"></i> Spark入门 - 1 搭建Hadoop分布式集群
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Surprise" />
+          <p class="site-author-name" itemprop="name">Surprise</p>
+          <p class="site-description motion-element" itemprop="description">往前走，莫回头</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CallMeSurprise" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2807061172/home?topnav=1&wvr=6" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> 微博
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/surprise" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Scala"><span class="nav-number">1.</span> <span class="nav-text">安装Scala</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本选择"><span class="nav-number">1.1.</span> <span class="nav-text">版本选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Spark和集群部署"><span class="nav-number">2.</span> <span class="nav-text">安装Spark和集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#错误提示"><span class="nav-number">2.1.</span> <span class="nav-text">错误提示</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Surprise</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qLNMwyhxbtf5hzIzRIw4kN75-gzGzoHsz", "cSHLSKcfFJQymvS1MSIMHnzO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
