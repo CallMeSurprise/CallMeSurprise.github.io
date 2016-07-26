@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Hadoop,Linux,Spark,Ubuntu," />
 
 
 
@@ -57,18 +57,22 @@
 
 
 
-<meta name="description" content="这是测试图片的。">
+<meta name="description" content="这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。
+环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。
+通过Spark提供的示例LocalPi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes">
-<meta property="og:url" content="http://yoursite.com/2016/02/25/Notes/index.html">
+<meta property="og:title" content="Spark入门 - 3 测试Spark集群">
+<meta property="og:url" content="http://yoursite.com/2016/07/26/Spark入门 - 3 测试Spark集群/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
-<meta property="og:description" content="这是测试图片的。">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg">
-<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg">
-<meta property="og:updated_time" content="2016-02-28T08:31:28.331Z">
+<meta property="og:description" content="这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。
+环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。
+通过Spark提供的示例LocalPi">
+<meta property="og:updated_time" content="2016-07-26T08:38:23.901Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Notes">
-<meta name="twitter:description" content="这是测试图片的。">
+<meta name="twitter:title" content="Spark入门 - 3 测试Spark集群">
+<meta name="twitter:description" content="这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。
+环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。
+通过Spark提供的示例LocalPi">
 
 
 
@@ -86,7 +90,7 @@
   };
 </script>
 
-  <title> Notes | CallMeSurprise </title>
+  <title> Spark入门 - 3 测试Spark集群 | CallMeSurprise </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -226,7 +230,7 @@
             
             
               
-                Notes
+                Spark入门 - 3 测试Spark集群
               
             
           </h1>
@@ -238,11 +242,30 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-25T21:21:59+08:00" content="2016-02-25">
-              2016-02-25
+            <time itemprop="dateCreated" datetime="2016-07-26T10:01:06+08:00" content="2016-07-26">
+              2016-07-26
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -253,7 +276,7 @@
 
           
           
-             <span id="/2016/02/25/Notes/" class="leancloud_visitors" data-flag-title="Notes">
+             <span id="/2016/07/26/Spark入门 - 3 测试Spark集群/" class="leancloud_visitors" data-flag-title="Spark入门 - 3 测试Spark集群">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -271,56 +294,48 @@
 
       
       
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg" rel="gallery_cir37r6kk001kfcuo6tpi7ehg"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xrb5e.com1.z0.glb.clouddn.com/11%E5%89%AF%E6%9C%AC.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-            
-              <a class="post-gallery-img fancybox"
-                 href="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg" rel="gallery_cir37r6kk001kfcuo6tpi7ehg"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xrb5e.com1.z0.glb.clouddn.com/6206dd69caeb52ad808b130f%20%E5%89%AF%E6%9C%AC.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><h3 id="主题-Next"><a href="#主题-Next" class="headerlink" title="主题-Next"></a>主题-Next</h3><pre><code>http://theme-next.iissnan.com/
-</code></pre><h3 id="TODOing"><a href="#TODOing" class="headerlink" title="TODOing"></a>TODOing</h3><h4 id="Feed-不是很想做这部分"><a href="#Feed-不是很想做这部分" class="headerlink" title="Feed 不是很想做这部分"></a>Feed 不是很想做这部分</h4><h4 id="多说的评论部分，不想做"><a href="#多说的评论部分，不想做" class="headerlink" title="多说的评论部分，不想做"></a>多说的评论部分，不想做</h4><h4 id="显示文章的阅读量"><a href="#显示文章的阅读量" class="headerlink" title="显示文章的阅读量"></a>显示文章的阅读量</h4><p>主页和文章展开的时候在标题下方显示文章阅读人数。<br><a href="http://www.jeyzhang.com/hexo-next-add-post-views.html" target="_blank" rel="external">http://www.jeyzhang.com/hexo-next-add-post-views.html</a><br>参照此处链接，可以实现。不过目前（2016-02-28）的hexo-next主题已经支持，只需要根据上述教程注册账号，填写好app-*信息即可。</p>
-<blockquote>
-<p>如果刷新后，未达到效果，可等待几分钟再刷新即可。</p>
-</blockquote>
-<h3 id="测试代码显示效果"><a href="#测试代码显示效果" class="headerlink" title="测试代码显示效果"></a>测试代码显示效果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">    * 输出一行字符串“Hello World!”</span><br><span class="line">    * <span class="doctag">@param</span> args</span><br><span class="line">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	System.out.println(<span class="string">"Hello World!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。</p>
+<p>环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。</p>
+<h1 id="通过Spark提供的示例LocalPi测试Spark集群"><a href="#通过Spark提供的示例LocalPi测试Spark集群" class="headerlink" title="通过Spark提供的示例LocalPi测试Spark集群"></a>通过Spark提供的示例LocalPi测试Spark集群</h1><p>该示例是用Spark的<code>run-example</code>命令在Spark集群里运行示例LocalPi，最终打印Pi的一个大约的值到Shell控制台。</p>
+<p>（1）启动Spark集群和Spark Shell</p>
+<p>（2）进入Spark的bin目录下，用<code>run-example</code>命令运行Spark自带的示例LocalPi，该示例的源码如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.spark.examples</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.math.random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark._</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkContext</span>._</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">LocalPi</span> &#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span>(</span>args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">100000</span>) &#123;</span><br><span class="line">      <span class="keyword">val</span> x = random * <span class="number">2</span> - <span class="number">1</span></span><br><span class="line">      <span class="keyword">val</span> y = random * <span class="number">2</span> - <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> (x*x + y*y &lt; <span class="number">1</span>) count += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">"Pi is roughly "</span> + <span class="number">4</span> * count / <span class="number">100000.0</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在master结点的Spark的bin目录下输入以下命令：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6# ./bin/run-example org.apache.spark.examples.LocalPi spark://master:7077&#10;Pi is roughly 3.14716&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6#</span><br></pre></td></tr></table></figure>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>根据书本整理的三篇Spark入门文章到此结束。大致实现思路均为本人亲自实现，修正了书本中的一些错误。</p>
+<p>更为详细的使用，以及一些理论知识，还需要进一步学习！</p>
 
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Spark/" rel="tag">#Spark</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/07/25/Spark入门 - 2 Spark安装和集群部署/" rel="next" title="Spark入门 - 2 Spark安装和集群部署">
+                <i class="fa fa-chevron-left"></i> Spark入门 - 2 Spark安装和集群部署
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/28/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -487,7 +502,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.</span> <span class="nav-text">TODO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主题-Next"><span class="nav-number">1.1.</span> <span class="nav-text">主题-Next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODOing"><span class="nav-number">1.2.</span> <span class="nav-text">TODOing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Feed-不是很想做这部分"><span class="nav-number">1.2.1.</span> <span class="nav-text">Feed 不是很想做这部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多说的评论部分，不想做"><span class="nav-number">1.2.2.</span> <span class="nav-text">多说的评论部分，不想做</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示文章的阅读量"><span class="nav-number">1.2.3.</span> <span class="nav-text">显示文章的阅读量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码显示效果"><span class="nav-number">1.3.</span> <span class="nav-text">测试代码显示效果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通过Spark提供的示例LocalPi测试Spark集群"><span class="nav-number">1.</span> <span class="nav-text">通过Spark提供的示例LocalPi测试Spark集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">2.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
