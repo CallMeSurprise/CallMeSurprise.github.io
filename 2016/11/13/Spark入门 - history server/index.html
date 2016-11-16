@@ -63,8 +63,8 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/13/Spark入门 - history server/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
 <meta property="og:description" content="问题描述在Spark安装成功后，无论是通过spark-submit工具还是通过Intellij IDEA提交任务，只要在Spark应用程序运行期间，都可以通过WebUI控制台页面来查看具体的运行细节，在浏览器中通过地址：http://&amp;lt;driver-node&amp;gt;:4040即可查看当前的运行状态。但是一旦应用程序运行结束，该Web界面也就失效了，无法继续查看监控集群信息。无法回顾刚刚运行的">
-<meta property="og:image" content="http://yoursite.com/History Server">
-<meta property="og:updated_time" content="2016-11-16T12:27:24.662Z">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-Spark-History-Server.PNG">
+<meta property="og:updated_time" content="2016-11-16T12:47:29.247Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark入门 - History Server配置使用">
 <meta name="twitter:description" content="问题描述在Spark安装成功后，无论是通过spark-submit工具还是通过Intellij IDEA提交任务，只要在Spark应用程序运行期间，都可以通过WebUI控制台页面来查看具体的运行细节，在浏览器中通过地址：http://&amp;lt;driver-node&amp;gt;:4040即可查看当前的运行状态。但是一旦应用程序运行结束，该Web界面也就失效了，无法继续查看监控集群信息。无法回顾刚刚运行的">
@@ -333,7 +333,7 @@
 <p>如果提示文件目录无效，可以直接使用下面的命令指定目录：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6/sbin# ./start-history-server.sh hdfs://master:9000/history</span><br></pre></td></tr></table></figure>
 <p>启动后的效果如下（此时尚未运行程序，没有记录显示出来）：</p>
-<p><img src="History Server" alt="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-Spark-History-Server.PNG"></p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-Spark-History-Server.PNG" alt="2016-11-16-Spark History Server"></p>
 <p>之后在每次应用程序运行结束后，就可以在这里观察刚刚程序的细节了。</p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>应用程序运行时的4040和历史记录的18080WebUI配合使用，可以让我们在运行Spark应用的时候随时监测程序运行状态，并作相应的优化和调节，效果显著。</p>
 <h3 id="小问题"><a href="#小问题" class="headerlink" title="小问题"></a>小问题</h3><p>不过其中也有一部分小细节尚未解决：如某次程序允许的时候用户选择自行中断，但历史记录中仍然存在该记录，而且最主要的是目前无法删除单项纪录。这就显得很繁琐了，如果需要对多项历史记录进行对比分析，就不得不先在很多的记录中筛选出哪些是有用记录，哪些是无用记录，费时费力。</p>
