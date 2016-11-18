@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hadoop,Linux,Spark,Ubuntu," />
+  <meta name="keywords" content="Hadoop,Linux,Spark," />
 
 
 
@@ -57,22 +57,27 @@
 
 
 
-<meta name="description" content="这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。
-环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。
-通过Spark提供的示例LocalPi">
+<meta name="description" content="常用Spark监控Tab最近用Spark做任务，中间来回配置集群环境，查看配置后的效果，以及监测程序运行过程中的运行进度等，需要频繁查看WebUI的几个Tab。各个tab功能不一，从不同方面显示了Spark的各方面性能参数和运行进度。
+特意记录一下，方便以后用得到的时候能够快速回顾知识点。
+HDFS配置概览第一个tab是在配置好Hadoop之后就可以查看的。在这之前要先运行start-dfs.sh">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark入门 - 3 测试Spark集群">
-<meta property="og:url" content="http://yoursite.com/2016/07/26/Spark入门 - 3 测试Spark集群/index.html">
+<meta property="og:title" content="Spark入门 - 常用Spark监控Tab">
+<meta property="og:url" content="http://yoursite.com/2016/11/16/Spark入门 - 4个常用Spark监控Tab/index.html">
 <meta property="og:site_name" content="CallMeSurprise">
-<meta property="og:description" content="这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。
-环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。
-通过Spark提供的示例LocalPi">
-<meta property="og:updated_time" content="2016-07-26T08:43:05.876Z">
+<meta property="og:description" content="常用Spark监控Tab最近用Spark做任务，中间来回配置集群环境，查看配置后的效果，以及监测程序运行过程中的运行进度等，需要频繁查看WebUI的几个Tab。各个tab功能不一，从不同方面显示了Spark的各方面性能参数和运行进度。
+特意记录一下，方便以后用得到的时候能够快速回顾知识点。
+HDFS配置概览第一个tab是在配置好Hadoop之后就可以查看的。在这之前要先运行start-dfs.sh">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-50070hdfs.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-50070hdfs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-8080%E7%AB%AF%E5%8F%A3.PNG">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-4040WebUI%E7%BD%91%E7%BB%9C%E5%9B%BE%E7%89%87.jpg">
+<meta property="og:image" content="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-Spark-History-Server.PNG">
+<meta property="og:updated_time" content="2016-11-18T03:04:17.967Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark入门 - 3 测试Spark集群">
-<meta name="twitter:description" content="这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。
-环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。
-通过Spark提供的示例LocalPi">
+<meta name="twitter:title" content="Spark入门 - 常用Spark监控Tab">
+<meta name="twitter:description" content="常用Spark监控Tab最近用Spark做任务，中间来回配置集群环境，查看配置后的效果，以及监测程序运行过程中的运行进度等，需要频繁查看WebUI的几个Tab。各个tab功能不一，从不同方面显示了Spark的各方面性能参数和运行进度。
+特意记录一下，方便以后用得到的时候能够快速回顾知识点。
+HDFS配置概览第一个tab是在配置好Hadoop之后就可以查看的。在这之前要先运行start-dfs.sh">
 
 
 
@@ -90,7 +95,7 @@
   };
 </script>
 
-  <title> Spark入门 - 3 测试Spark集群 | CallMeSurprise </title>
+  <title> Spark入门 - 常用Spark监控Tab | CallMeSurprise </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -230,7 +235,7 @@
             
             
               
-                Spark入门 - 3 测试Spark集群
+                Spark入门 - 常用Spark监控Tab
               
             
           </h1>
@@ -242,8 +247,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-26T10:01:06+08:00" content="2016-07-26">
-              2016-07-26
+            <time itemprop="dateCreated" datetime="2016-11-16T10:42:17+08:00" content="2016-11-16">
+              2016-11-16
             </time>
           </span>
 
@@ -276,7 +281,7 @@
 
           
           
-             <span id="/2016/07/26/Spark入门 - 3 测试Spark集群/" class="leancloud_visitors" data-flag-title="Spark入门 - 3 测试Spark集群">
+             <span id="/2016/11/16/Spark入门 - 4个常用Spark监控Tab/" class="leancloud_visitors" data-flag-title="Spark入门 - 常用Spark监控Tab">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -296,16 +301,37 @@
       
 
       
-        <p>这是Spark入门的第三篇，也是最后一篇。说是入门，其实就只是简单的根据两本Spark书本，结合网络资料，自己一边动手实现，一边做的记录。自己看的时候确实方便许多，重新搭建一遍Hadoop-2.6.4的时候，查看前两篇记录，重现一遍的时候效率很高。</p>
-<p>环境的搭建只是基础中的基础，不过之后的一切工作都要在这上面展开，并且用途也因人而异。因此这部分的记录入门尚可。</p>
-<h1 id="通过Spark提供的示例LocalPi测试Spark集群"><a href="#通过Spark提供的示例LocalPi测试Spark集群" class="headerlink" title="通过Spark提供的示例LocalPi测试Spark集群"></a>通过Spark提供的示例LocalPi测试Spark集群</h1><p>该示例是用Spark的<code>run-example</code>命令在Spark集群里运行示例LocalPi，最终打印Pi的一个大约的值到Shell控制台。</p>
-<p>（1）启动Spark集群和Spark Shell</p>
-<p>（2）进入Spark的bin目录下，用<code>run-example</code>命令运行Spark自带的示例LocalPi，该示例的源码如下：</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.spark.examples</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.math.random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark._</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkContext</span>._</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">LocalPi</span> &#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span>(</span>args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">100000</span>) &#123;</span><br><span class="line">      <span class="keyword">val</span> x = random * <span class="number">2</span> - <span class="number">1</span></span><br><span class="line">      <span class="keyword">val</span> y = random * <span class="number">2</span> - <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> (x*x + y*y &lt; <span class="number">1</span>) count += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">"Pi is roughly "</span> + <span class="number">4</span> * count / <span class="number">100000.0</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在master结点的Spark的bin目录下输入以下命令：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6# ./bin/run-example org.apache.spark.examples.LocalPi spark://master:7077&#10;Pi is roughly 3.14716&#10;root@master:/usr/local/spark/spark-1.6.2-bin-hadoop2.6#</span><br></pre></td></tr></table></figure>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>根据书本整理的三篇Spark入门文章到此结束。大致实现思路均为本人亲自实现，修正了书本中的一些错误。</p>
-<p>更为详细的使用，以及一些理论知识，还需要进一步学习！</p>
+        <h1 id="常用Spark监控Tab"><a href="#常用Spark监控Tab" class="headerlink" title="常用Spark监控Tab"></a>常用Spark监控Tab</h1><p>最近用Spark做任务，中间来回配置集群环境，查看配置后的效果，以及监测程序运行过程中的运行进度等，需要频繁查看WebUI的几个Tab。各个tab功能不一，从不同方面显示了Spark的各方面性能参数和运行进度。</p>
+<p>特意记录一下，方便以后用得到的时候能够快速回顾知识点。</p>
+<h2 id="HDFS配置概览"><a href="#HDFS配置概览" class="headerlink" title="HDFS配置概览"></a>HDFS配置概览</h2><p>第一个tab是在配置好Hadoop之后就可以查看的。在这之前要先运行<code>start-dfs.sh</code>开启文件系统。具体地址为<code>http://192.168.247.130:50070/dfshealth.html#tab-overview</code>。配置完成后 在浏览器中输入该地址，或直接输入<code>http://192.168.247.130:50070</code>也可以自动跳转至该界面，界面效果如下：</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-50070hdfs.PNG" alt="50070hdfs概览"></p>
+<p>在这里可以查看集群配置的具体参数，如硬盘大小，使用率、堆栈大小、内存大小等信息。如果自行配置了某个配置项，而又不确定是否已经生效，则可以在这里查看结果。</p>
+<p>另一方面，结合Spark配置集群的时候，如果master节点如前几篇文章的配置，则master节点只负责集群任务调度，并不参与文件的存储和计算任务。因此在这里的<strong>Datanode</strong>标签里只能查看到Work1和Work2节点。如果需要将集群的所有资源都调度起来参与存储和计算，则可以更改配置后，查看此Tab确认配置是否生效。为达到调度所有集群的目的，可以和Spark的某一tab配置查看。</p>
+<h2 id="HDFS文件系统"><a href="#HDFS文件系统" class="headerlink" title="HDFS文件系统"></a>HDFS文件系统</h2><p>Spark的很多计算都是先从外部读取文件后转换成RDD然后才开始RDD转换和Action操作，因此前期很高频的一个操作就是将文件上传至HDFS文件系统中存储。上传命令不多说，官方文档、各类博客都可以学习参考。这里介绍的第二个tab即为查看HDFS上的文件，具体地址为<code>http://192.168.247.130:50070/explorer.html#/</code>，具体效果如下：</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-50070hdfs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.PNG" alt="HDFS文件系统"></p>
+<p>在这里我们可以看到HDFS中的文件和文件夹、文件大小、Block Size等信息，以及上文<a href="http://blog.csdn.net/surp2011/article/details/53191570" target="_blank" rel="external">Spark History Server配置</a>一文中设置的<code>History</code>文件夹。</p>
+<p>HDFS默认的Block Size为64M和128M。在做Spark并行实验的时候，可以通过修改配置文件永久改变，或上传文件的时候手动设置临时改变Block Size的大小。</p>
+<p>(1) 修改配置文件永久改变</p>
+<p>修改配置文件hdfs-site.xml，在之前配置文件的基础上，加上下面的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">property</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.block.size<span class="tag">&lt;/<span class="title">name</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="title">value</span>&gt;</span>33554432<span class="tag">&lt;/<span class="title">value</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该配置的缩进级别与<code>dfs.replication</code>处于同一级。value的值33554432为<code>32M=32*1024*1024</code>，只能是确定值如33554432，不能是计算式<code>32*1024*1024</code>。</p>
+<p>重新修改value值即可恢复到之前的设置。</p>
+<p>(2) 在上传命令中临时设置</p>
+<p>上传命令方法简单，具体命令为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop dfs -D dfs.blocksize=5242880 -put /home/hadoop/think/Data100M.txt /think/</span><br></pre></td></tr></table></figure>
+<h2 id="Spark配置概览"><a href="#Spark配置概览" class="headerlink" title="Spark配置概览"></a>Spark配置概览</h2><p>与第一个tab的Hadoop概览类似，文中的第三个tab是Spark配置集群成功后，查看Spark相关配置项的地方，如工作节点的数量、集群可用核心数、可用内存、以及各个节点的简略信息。方法也是先开启HDFS，然后运行<code>start-all.sh</code>开启Spark。具体地址为<code>http://192.168.247.130:8080/</code>，展示效果如下图：</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-8080%E7%AB%AF%E5%8F%A3.PNG" alt="Spark8080集群信息"></p>
+<p>配合第一个Tab可以查看集群中各个工作节点的基本信息，方便做出相应的更改。</p>
+<h2 id="应用程序运行期间的WebUI监控"><a href="#应用程序运行期间的WebUI监控" class="headerlink" title="应用程序运行期间的WebUI监控"></a>应用程序运行期间的WebUI监控</h2><p>查看具体的运行时间，Job、Task数量和运行阶段，以及详细的每个Task在节点的运行时间，输入输出文件大小等信息，并且可以通过图形界面直观查看节点的运行调度信息。还可以看到DAG信息，虽然不确定是否十分准确。在Environment标签查看更加详细的信息。</p>
+<p>具体地址为<code>http://192.168.247.130:4040/</code>。查看到的效果为：</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-4040WebUI%E7%BD%91%E7%BB%9C%E5%9B%BE%E7%89%87.jpg" alt="Spark运行期间WebUI监控"></p>
+<blockquote>
+<p>注：图片为网络资源，侵权的话请联系本人删除。谢谢</p>
+</blockquote>
+<h2 id="应用程序运行结束后的WebUI监控"><a href="#应用程序运行结束后的WebUI监控" class="headerlink" title="应用程序运行结束后的WebUI监控"></a>应用程序运行结束后的WebUI监控</h2><p>在文章<a href="http://blog.csdn.net/surp2011/article/details/53191570" target="_blank" rel="external">Spark History Server配置</a>一文中已经介绍过Spark运行期间和运行结束后的WebUI监控界面。这里的第5个tab就是之前介绍的Spark History Server界面信息。具体内容与<code>4040</code>端口一致。</p>
+<p>具体地址为<code>http://192.168.247.130:18080/</code>，展示效果如图：</p>
+<p><img src="http://7xrb5e.com1.z0.glb.clouddn.com/2016-11-16-Spark-History-Server.PNG" alt="Spark History Server界面信息"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>以上5个tab即为Spark配置和运行前后的一些信息查看源。熟练使用可以事半功倍，准确有效地调度集群资源，便于优化。</p>
 
       
     </div>
@@ -320,8 +346,6 @@
           
             <a href="/tags/Spark/" rel="tag">#Spark</a>
           
-            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
-          
         </div>
       
 
@@ -329,17 +353,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/25/Spark入门 - 2 Spark安装和集群部署/" rel="next" title="Spark入门 - 2 Spark安装和集群部署">
-                <i class="fa fa-chevron-left"></i> Spark入门 - 2 Spark安装和集群部署
+              <a href="/2016/11/13/Spark入门 - history server/" rel="next" title="Spark入门 - History Server配置使用">
+                <i class="fa fa-chevron-left"></i> Spark入门 - History Server配置使用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/13/Spark入门 - history server/" rel="prev" title="Spark入门 - History Server配置使用">
-                Spark入门 - History Server配置使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -506,7 +526,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通过Spark提供的示例LocalPi测试Spark集群"><span class="nav-number">1.</span> <span class="nav-text">通过Spark提供的示例LocalPi测试Spark集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">2.</span> <span class="nav-text">结语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用Spark监控Tab"><span class="nav-number">1.</span> <span class="nav-text">常用Spark监控Tab</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS配置概览"><span class="nav-number">1.1.</span> <span class="nav-text">HDFS配置概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS文件系统"><span class="nav-number">1.2.</span> <span class="nav-text">HDFS文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark配置概览"><span class="nav-number">1.3.</span> <span class="nav-text">Spark配置概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用程序运行期间的WebUI监控"><span class="nav-number">1.4.</span> <span class="nav-text">应用程序运行期间的WebUI监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用程序运行结束后的WebUI监控"><span class="nav-number">1.5.</span> <span class="nav-text">应用程序运行结束后的WebUI监控</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
