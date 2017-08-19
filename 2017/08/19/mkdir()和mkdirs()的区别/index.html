@@ -94,7 +94,7 @@
 <meta property="og:description" content="本文内容主要整理自Stack Overflow的问题：Difference between mkdir() and mkdirs() in java for java.io.File [closed]
 
 问题起源最近在实习工作中，将项目部署到新环境的服务器中时，遇到了mkdir()失败的问题。原因是在项目中配置的路径信息在新服务器上不存在，而且该路径是多层目录结构，mkdir()在多层目录不存在的">
-<meta property="og:updated_time" content="2017-08-19T12:01:50.548Z">
+<meta property="og:updated_time" content="2017-08-19T12:20:48.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mkdir()和mkdirs()的区别">
 <meta name="twitter:description" content="本文内容主要整理自Stack Overflow的问题：Difference between mkdir() and mkdirs() in java for java.io.File [closed]
@@ -406,7 +406,7 @@
 <li><code>/tmp/one/two/three</code></li>
 </ul>
 <p>对于<code>mkdir()</code>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">File f = <span class="keyword">new</span> File(<span class="string">"/tmp/one/two/three"</span>).mkdir();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f.mkdir();</span><br></pre></td></tr></table></figure>
 <p>当<code>/tmp/one/two</code>目录已经存在时，则执行成功，创建出目录：<code>/tmp/one/two/three</code>。而如果目录<code>/tmp/one/two/three</code>不存在，那么则会返回false。</p>
 <h1 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h1><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><p>信息的源头还是官方文档和源码，可以继续看英文文档加深理解。</p>
 <ul>
